@@ -33,10 +33,10 @@ public class TblAreaEntity {
     @Column(name = "area")
     private String area;
 
-//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-//    @JoinColumn(name = "city_id", nullable = false)
-//    @Fetch(FetchMode.JOIN)
-//    private TblCityEntity tblCityEntity;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "city_id", nullable = false)
+    @Fetch(FetchMode.JOIN)
+    private TblCityEntity tblCityEntity;
 
     @Column(name = "chome_area")
     private int chomeArea;
@@ -47,15 +47,15 @@ public class TblAreaEntity {
     @Column(name = "multi_post_area")
     private int multiPostArea;
 
-//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-//    @JoinColumn(name = "post_id", nullable = false)
-//    @Fetch(FetchMode.JOIN)
-//    private TblPostEntity tblPostEntity;
-//
-//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-//    @JoinColumn(name = "old_post_id", nullable = false)
-//    @Fetch(FetchMode.JOIN)
-//    private TblOldPostEntity tblOldPostEntity;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "post_id", nullable = false)
+    @Fetch(FetchMode.JOIN)
+    private TblPostEntity tblPostEntity;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "old_post_id", nullable = false)
+    @Fetch(FetchMode.JOIN)
+    private TblOldPostEntity tblOldPostEntity;
 
     public long getId() {
         return id;
@@ -81,13 +81,13 @@ public class TblAreaEntity {
         this.area = area;
     }
 
-//    public TblCityEntity getTblCityEntity() {
-//        return tblCityEntity;
-//    }
-//
-//    public void setTblCityEntity(TblCityEntity tblCityEntity) {
-//        this.tblCityEntity = tblCityEntity;
-//    }
+    public TblCityEntity getTblCityEntity() {
+        return tblCityEntity;
+    }
+
+    public void setTblCityEntity(TblCityEntity tblCityEntity) {
+        this.tblCityEntity = tblCityEntity;
+    }
 
     public int getChomeArea() {
         return chomeArea;
@@ -113,19 +113,19 @@ public class TblAreaEntity {
         this.multiPostArea = multiPostArea;
     }
 
-//    public TblPostEntity getTblPostEntity() {
-//        return tblPostEntity;
-//    }
-//
-//    public void setTblPostEntity(TblPostEntity tblPostEntity) {
-//        this.tblPostEntity = tblPostEntity;
-//    }
-//
-//    public TblOldPostEntity getTblOldPostEntity() {
-//        return tblOldPostEntity;
-//    }
-//
-//    public void setTblOldPostEntity(TblOldPostEntity tblOldPostEntity) {
-//        this.tblOldPostEntity = tblOldPostEntity;
-//    }
+    public TblPostEntity getTblPostEntity() {
+        return tblPostEntity;
+    }
+
+    public void setTblPostEntity(TblPostEntity tblPostEntity) {
+        this.tblPostEntity = tblPostEntity;
+    }
+
+    public TblOldPostEntity getTblOldPostEntity() {
+        return tblOldPostEntity;
+    }
+
+    public void setTblOldPostEntity(TblOldPostEntity tblOldPostEntity) {
+        this.tblOldPostEntity = tblOldPostEntity;
+    }
 }

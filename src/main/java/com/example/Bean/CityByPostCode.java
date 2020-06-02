@@ -1,13 +1,8 @@
-package com.example.Entity;
+package com.example.Bean;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.Entity;
-import java.io.Serializable;
-
-@Entity
-public class CityByPrefectureEntity implements Serializable {
-
+public class CityByPostCode {
     @JsonProperty("code")
     private String code;
 
@@ -26,52 +21,12 @@ public class CityByPrefectureEntity implements Serializable {
     @JsonProperty("prefecture_code")
     private String prefectureCode;
 
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
+    public CityByPostCode(String code, String prefecture, String city, String prefectureKana, String cityKana, String prefectureCode) {
         this.code = code;
-    }
-
-    public String getPrefecture() {
-        return prefecture;
-    }
-
-    public void setPrefecture(String prefecture) {
         this.prefecture = prefecture;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
         this.city = city;
-    }
-
-    public String getPrefectureKana() {
-        return prefectureKana;
-    }
-
-    public void setPrefectureKana(String prefectureKana) {
         this.prefectureKana = prefectureKana;
-    }
-
-    public String getCityKana() {
-        return cityKana;
-    }
-
-    public void setCityKana(String cityKana) {
         this.cityKana = cityKana;
-    }
-
-    public String getPrefectureCode() {
-        return prefectureCode;
-    }
-
-    public void setPrefectureCode(String prefectureCode) {
         this.prefectureCode = prefectureCode;
     }
 
@@ -85,4 +40,5 @@ public class CityByPrefectureEntity implements Serializable {
                 ",\"prefecture_code\":\"" + prefectureCode + "}\"";
 
     }
+
 }

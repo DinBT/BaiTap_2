@@ -1,7 +1,7 @@
 package com.example.controller;
 
-import com.example.Entity.AddressByPostCodeEntity;
-import com.example.Entity.CityByPrefectureEntity;
+import com.example.Bean.AddressByCode;
+import com.example.Bean.CityByPostCode;
 import com.example.responsitory.SearchByPostCode;
 import com.example.responsitory.SearchByPrefecture;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,7 @@ public class SearchController {
         if (postCode == null || !postCode.matches("^[0-9]{1,}$")) {
             return "400: BadRequest!";
         }
-        AddressByPostCodeEntity result = searchByPostCode.searchByPostCode(postCode);
+        AddressByCode result = searchByPostCode.searchByPostCode(postCode);
         if (result == null) {
             return "404: NotFound!!";
         }
@@ -49,7 +49,7 @@ public class SearchController {
         if (prefectureCode == null || !prefectureCode.matches("^[0-9]{1,}$")) {
             return "400: BadRequest!";//HttpStatus.BAD_REQUEST
         }
-        List<CityByPrefectureEntity> listResult = searchByPrefecture.searchByPrefectureCode(prefectureCode);
+        List<CityByPostCode> listResult = searchByPrefecture.searchByPrefectureCode(prefectureCode);
         if (listResult == null || listResult.isEmpty()) {
             return "404: NotFound!!";
         }

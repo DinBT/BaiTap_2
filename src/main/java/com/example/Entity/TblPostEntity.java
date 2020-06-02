@@ -35,9 +35,9 @@ public class TblPostEntity {
 
     @Column(name = "change_reason")
     private int changeReason;
-//
-//    @OneToMany(targetEntity = TblAreaEntity.class, mappedBy = "id", fetch = FetchType.LAZY)
-//    private List<TblAreaEntity> tblAreaEntityList;
+
+    @OneToMany(targetEntity = TblAreaEntity.class, mappedBy = "id", fetch = FetchType.LAZY)
+    private List<TblAreaEntity> tblAreaEntityList;
 
 
     public String getPostCode() {
@@ -72,13 +72,13 @@ public class TblPostEntity {
         this.changeReason = changeReason;
     }
 
-//    public List<TblAreaEntity> getTblAreaEntityList() {
-//        return tblAreaEntityList;
-//    }
-//
-//    public void setTblAreaEntityList(List<TblAreaEntity> tblAreaEntityList) {
-//        this.tblAreaEntityList = tblAreaEntityList;
-//    }
+    public List<TblAreaEntity> getTblAreaEntityList() {
+        return tblAreaEntityList;
+    }
+
+    public void setTblAreaEntityList(List<TblAreaEntity> tblAreaEntityList) {
+        this.tblAreaEntityList = tblAreaEntityList;
+    }
 
 }
 

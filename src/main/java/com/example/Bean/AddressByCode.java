@@ -1,13 +1,8 @@
-package com.example.Entity;
+package com.example.Bean;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.Entity;
-import java.io.Serializable;
-
-@Entity
-public class AddressByPostCodeEntity implements Serializable {
-
+public class AddressByCode {
     @JsonProperty("code")
     private String code;
 
@@ -56,6 +51,24 @@ public class AddressByPostCodeEntity implements Serializable {
     @JsonProperty("prefecture_code")
     private String prefectureCode;
 
+    public AddressByCode(String code, String prefecture, String city, String area, String oldPostCode, String postCode, String prefectureKana, String cityKana, String areaKana, int multiArea, int koazaArea, int chomeArea, int multiPostArea, int updateShow, int changeReason, String prefectureCode) {
+        this.code = code;
+        this.prefecture = prefecture;
+        this.city = city;
+        this.area = area;
+        this.oldPostCode = oldPostCode;
+        this.postCode = postCode;
+        this.prefectureKana = prefectureKana;
+        this.cityKana = cityKana;
+        this.areaKana = areaKana;
+        this.multiArea = multiArea;
+        this.koazaArea = koazaArea;
+        this.chomeArea = chomeArea;
+        this.multiPostArea = multiPostArea;
+        this.updateShow = updateShow;
+        this.changeReason = changeReason;
+        this.prefectureCode = prefectureCode;
+    }
 
     public String getCode() {
         return code;
