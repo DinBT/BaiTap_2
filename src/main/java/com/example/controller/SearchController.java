@@ -6,10 +6,12 @@ import com.example.responsitory.SearchByPostCode;
 import com.example.responsitory.SearchByPrefecture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -23,16 +25,13 @@ public class SearchController {
 
     @Autowired
     private SearchByPostCode searchByPostCode;
-
     @Autowired
     private SearchByPrefecture searchByPrefecture;
 
-
-    @GetMapping("/post/{pc}")
-    public String searchAddress(
-            @PathVariable(value = "pc") String postCode) {
+    @RequestMapping(value = "post/{postCode}", method = RequestMethod.GET)
+    public String searchByPostCode(@PathVariable(value = "postCode") String postCode) {
         postCode = postCode.replaceAll("-", "").replaceAll(" ", "");
-        if (postCode == null || !postCode.matches("^[0-9]{1,}$")) {
+        if (postCode == null || !(postCode.matches("^[0-9]{1,}$"))) {
             return "400: BadRequest!";
         }
         AddressByCode result = searchByPostCode.searchByPostCode(postCode);
@@ -42,11 +41,11 @@ public class SearchController {
         return "{\"data\":[" + result.toString() + "],\"result\":\"success\"}";
     }
 
-    @GetMapping("/prefectures/{pr}")
+    @RequestMapping(value = "/prefectures/{pr}", method = RequestMethod.GET)
     public String searchByPrefectureCode(
-            @RequestParam(value = "pr") String prefectureCode) {
+            @PathVariable(value = "pr") String prefectureCode) {
         prefectureCode = prefectureCode.replaceAll("-", "").replaceAll(" ", "");
-        if (prefectureCode == null || !prefectureCode.matches("^[0-9]{1,}$")) {
+        if (prefectureCode == null || !(prefectureCode.matches("^[0-9]{1,}$"))) {
             return "400: BadRequest!";//HttpStatus.BAD_REQUEST
         }
         List<CityByPostCode> listResult = searchByPrefecture.searchByPrefectureCode(prefectureCode);
@@ -54,10 +53,11 @@ public class SearchController {
             return "404: NotFound!!";
         }
         StringBuilder result = new StringBuilder();
-        listResult.forEach(record -> result.append(record.toString() + ","));
+        for (CityByPostCode record : listResult) {
+            result.append(record.toString() + ",");
+        }
         return "{\"data\":[" + result.toString() + "],\"result\":\"success\"}";
     }
-
 
     /**
      * Tất cả các Exception không được khai báo sẽ được xử lý tại đây

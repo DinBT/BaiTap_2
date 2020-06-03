@@ -1,5 +1,7 @@
 package com.example.Entity;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,8 +36,7 @@ public class TblPrefectureEntity {
     @Column(name = "prefecture_code")
     private String prefectureCode;
 
-    @OneToMany(targetEntity = TblCityEntity.class, mappedBy = "prefecture_id", fetch = FetchType.LAZY)
-    private List<TblCityEntity> tblCityEntityList;
+
 
 
     public String getPrefecture() {
@@ -62,13 +63,6 @@ public class TblPrefectureEntity {
         this.prefectureCode = prefectureCode;
     }
 
-    public List<TblCityEntity> getTblCityEntityList() {
-        return tblCityEntityList;
-    }
-
-    public void setTblCityEntityList(List<TblCityEntity> tblCityEntityList) {
-        this.tblCityEntityList = tblCityEntityList;
-    }
 
 }
 

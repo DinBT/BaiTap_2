@@ -27,8 +27,6 @@ public class TblOldPostEntity {
     @Column(name = "old_post_code")
     private String oldPostCode;
 
-    @OneToMany(targetEntity = TblAreaEntity.class, mappedBy = "id", fetch = FetchType.LAZY)
-    private List<TblAreaEntity> tblAreaEntityList;
 
 
     public String getOldPostCode() {
@@ -39,13 +37,6 @@ public class TblOldPostEntity {
         this.oldPostCode = oldPostCode;
     }
 
-    public List<TblAreaEntity> getTblAreaEntityList() {
-        return tblAreaEntityList;
-    }
-
-    public void setTblAreaEntityList(List<TblAreaEntity> tblAreaEntityList) {
-        this.tblAreaEntityList = tblAreaEntityList;
-    }
 
 }
 

@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -37,6 +38,7 @@ public class TblAreaEntity {
     @JoinColumn(name = "city_id", nullable = false)
     @Fetch(FetchMode.JOIN)
     private TblCityEntity tblCityEntity;
+
 
     @Column(name = "chome_area")
     private int chomeArea;

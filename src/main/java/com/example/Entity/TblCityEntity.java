@@ -2,6 +2,7 @@ package com.example.Entity;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,13 +39,7 @@ public class TblCityEntity {
     @Column(name = "city_kana")
     private String cityKana;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "prefecture_id")
-    @Fetch(FetchMode.JOIN)
-    private TblPrefectureEntity tblPrefectureEntity;
 
-    @OneToMany(targetEntity = TblAreaEntity.class, mappedBy = "id", fetch = FetchType.LAZY)
-    private List<TblAreaEntity> tblAreaEntityList;
 
 
     public String getCode() {
@@ -71,20 +66,5 @@ public class TblCityEntity {
         this.cityKana = cityKana;
     }
 
-    public TblPrefectureEntity getTblPrefectureEntity() {
-        return tblPrefectureEntity;
-    }
-
-    public void setTblPrefectureEntity(TblPrefectureEntity tblPrefectureEntity) {
-        this.tblPrefectureEntity = tblPrefectureEntity;
-    }
-
-    public List<TblAreaEntity> getTblAreaEntityList() {
-        return tblAreaEntityList;
-    }
-
-    public void setTblAreaEntityList(List<TblAreaEntity> tblAreaEntityList) {
-        this.tblAreaEntityList = tblAreaEntityList;
-    }
 
 }
