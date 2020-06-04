@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 
 /**
- * Bean save results searching by postCode
+ * Bean save a results searching by postCode
  *
  * @author DinBT
  */
@@ -83,9 +83,6 @@ public class AddressByPostCode {
     @JsonProperty("prefecture_code")
     @NotNull
     private String prefectureCode;
-
-    public AddressByPostCode() {
-    }
 
     public AddressByPostCode(String code, String prefecture, String city, String area, String oldPostCode,
                              String postCode, String prefectureKana, String cityKana, String areaKana,

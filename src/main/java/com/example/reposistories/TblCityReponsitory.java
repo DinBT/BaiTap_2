@@ -33,7 +33,7 @@ public interface TblCityReponsitory extends JpaRepository<TblCityEntity, Long> {
      * Search data by postCode
      *
      * @param postCode
-     * @return AddressByPostCode
+     * @return List<AddressByPostCode>
      */
     @Query("SELECT new com.example.bean.AddressByPostCode(c.code, p.prefecture, c.city, " +
             "a.area, old.oldPostCode, post.postCode, p.prefectureKana, c.cityKana, a.areaKana, post.multiArea, " +
@@ -46,6 +46,13 @@ public interface TblCityReponsitory extends JpaRepository<TblCityEntity, Long> {
             "WHERE post.postCode = :postCode")
     List<AddressByPostCode> searchByPostCode(@Param("postCode") String postCode);
 
+
+    /**
+     * Search data by postCode
+     *
+     * @param prefectureCode
+     * @return List<CityByPrefecture>
+     */
     @Query("SELECT new com.example.bean.CityByPrefecture(c.code, p.prefecture, c.city, " +
             "p.prefectureKana, c.cityKana, p.prefectureCode) " +
             "FROM TblCityEntity c " +

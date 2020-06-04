@@ -57,5 +57,5 @@ public class TblOldPostEntity {
 	public void setTblAreaEntityList(List<TblAreaEntity> tblAreaEntityList) {
 		this.tblAreaEntityList = tblAreaEntityList;
 	}
-	
+
 }

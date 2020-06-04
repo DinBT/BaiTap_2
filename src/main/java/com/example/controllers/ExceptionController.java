@@ -1,3 +1,13 @@
+/*
+ * Copyright 2015-2016 Classmethod, Inc.
+ * All Rights Reserved.
+ *
+ * NOTICE:  All source code, documentation and other information
+ * contained herein is, and remains the property of Classmethod, Inc.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Classmethod, Inc.
+ */
 package com.example.controllers;
 
 import com.example.exception.BadRequest;
@@ -5,12 +15,19 @@ import com.example.exception.NotFound;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+/**
+ * Controller for error
+ *
+ * @author DinBT
+ */
 @RestControllerAdvice
+@RequestMapping("*/error")
 public class ExceptionController extends ResponseEntityExceptionHandler {
 
     /**
@@ -44,7 +61,6 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<String> handleAllException(Exception ex, WebRequest request) {
-        // quá trình kiểm soat lỗi diễn ra ở đây
         return new ResponseEntity<>("Server Busy!!!", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

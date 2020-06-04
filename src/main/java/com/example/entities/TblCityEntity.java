@@ -56,8 +56,7 @@ public class TblCityEntity {
 	
 	@OneToMany(targetEntity = TblAreaEntity.class, mappedBy = "id", fetch = FetchType.LAZY)
 	private List<TblAreaEntity> tblAreaEntityList;
-	
-	
+
 	public String getCode() {
 		return code;
 	}
@@ -97,5 +96,5 @@ public class TblCityEntity {
 	public void setTblAreaEntityList(List<TblAreaEntity> tblAreaEntityList) {
 		this.tblAreaEntityList = tblAreaEntityList;
 	}
-	
+
 }

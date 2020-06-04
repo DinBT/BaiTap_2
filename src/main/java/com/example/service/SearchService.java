@@ -1,6 +1,15 @@
+/*
+ * Copyright 2015-2016 Classmethod, Inc.
+ * All Rights Reserved.
+ *
+ * NOTICE:  All source code, documentation and other information
+ * contained herein is, and remains the property of Classmethod, Inc.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Classmethod, Inc.
+ */
 package com.example.service;
 
-import com.example.AddressApplication;
 import com.example.bean.AddressByPostCode;
 import com.example.bean.CityByPrefecture;
 import com.example.reposistories.TblCityReponsitory;
@@ -23,7 +32,7 @@ public class SearchService {
      * Service for seaching by postCode
      *
      * @param postCode
-     * @return AddressByPostCode Address have search
+     * @return List<AddressByPostCode>: Address had search
      */
     public List<AddressByPostCode> searchByPostCode(String postCode) {
         return tblCityReponsitory.searchByPostCode(postCode);

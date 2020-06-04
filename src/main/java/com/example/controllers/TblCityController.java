@@ -44,16 +44,16 @@ public class TblCityController {
      * Solving and response data for request from client if user search by postCode
      *
      * @param postCode: postCode to search
-     * @return String: city found
+     * @return ResponseEntity<AddressResult>: address found
      */
     @RequestMapping(value = "post/{pc}", method = RequestMethod.GET)
     public ResponseEntity<AddressResult> searchByPostCode(@PathVariable(value = "pc") String postCode) {
         postCode = postCode.replaceAll(" ", "").replaceAll("-", "");
-        if (postCode == null || !(postCode.matches("^[0-9]{1,}$"))) {
+        if (postCode.equals("") || !(postCode.matches("^[0-9]{1,}$"))) {
             throw new BadRequest("Bad Request");
         }
         List<AddressByPostCode> recordList = searchService.searchByPostCode(postCode);
-        if (recordList == null) {
+        if (recordList == null || recordList.size() == 0) {
             throw new NotFound("Not Found");
         }
         return new ResponseEntity<>(new AddressResult(recordList), HttpStatus.OK);
@@ -63,13 +63,13 @@ public class TblCityController {
      * Solving and response data for request from client if user search by prefectureCode
      *
      * @param prefectureCode: prefectureCode to search
-     * @return String: result found
+     * @return ResponseEntity<ListCityResult>: list city result
      */
     @RequestMapping(value = "prefecture/{pr}", method = RequestMethod.GET)
     public ResponseEntity<ListCityResult> searchByPrefectureCode(
             @PathVariable(value = "pr") String prefectureCode) {
         prefectureCode = prefectureCode.replace(" ", "").replace("-", "");
-        if (prefectureCode == null || !(prefectureCode.matches("^[0-9]{1,}$"))) {
+        if (prefectureCode == "" || !(prefectureCode.matches("^[0-9]{1,}$"))) {
             throw new BadRequest("Bad Request");
         }
         List<CityByPrefecture> recordList = searchService.searchByPrefectureCode(prefectureCode);
