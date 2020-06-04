@@ -8,7 +8,7 @@
  * is strictly forbidden unless prior written permission is obtained
  * from Classmethod, Inc.
  */
-package com.example.address.entities;
+package com.example.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

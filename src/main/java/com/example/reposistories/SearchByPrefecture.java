@@ -8,17 +8,17 @@
  * is strictly forbidden unless prior written permission is obtained
  * from Classmethod, Inc.
  */
-package com.example.address.reposistories;
+package com.example.reposistories;
 
 import java.util.List;
 
-import com.example.address.entities.TblCityEntity;
+import com.example.entities.TblCityEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.example.address.bean.CityByPrefecture;
+import com.example.bean.CityByPrefecture;
 
 /**
  * Repository interface for tbl_prefecture
@@ -34,7 +34,7 @@ public interface SearchByPrefecture extends JpaRepository<TblCityEntity, Long> {
 	 * @param prefectureCode
 	 * @return List<CityByPrefecture>
 	 */
-	@Query("SELECT new com.example.address.bean.CityByPrefecture(c.code, p.prefecture, c.city, " +
+	@Query("SELECT new com.example.bean.CityByPrefecture(c.code, p.prefecture, c.city, " +
 			"p.prefectureKana, c.cityKana, p.prefectureCode) " +
 			"FROM TblCityEntity c " +
 			"INNER JOIN c.tblPrefectureEntity p " +

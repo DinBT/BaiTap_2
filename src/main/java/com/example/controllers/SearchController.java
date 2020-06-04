@@ -8,27 +8,31 @@
  * is strictly forbidden unless prior written permission is obtained
  * from Classmethod, Inc.
  */
-package com.example.address.controllers;
+package com.example.controllers;
 
 import java.util.List;
 
-import com.example.address.reposistories.SearchByPostCode;
-import com.example.address.reposistories.SearchByPrefecture;
-import com.example.address.bean.CityByPrefecture;
+import com.example.reposistories.SearchByPostCode;
+import com.example.reposistories.SearchByPrefecture;
+import com.example.bean.CityByPrefecture;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.example.address.bean.AddressByPostCode;
+import com.example.bean.AddressByPostCode;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 
 /**
  * Controller for searching
  *
  * @author DinBT
  */
-@RestController
+@RestControllerAdvice
 @RequestMapping("address")
 public class SearchController {
 
@@ -49,11 +53,11 @@ public class SearchController {
     public String searchByPostCode(@PathVariable(value = "pc") String postCode) {
         postCode = postCode.replaceAll(" ", "").replaceAll("-", "");
         if (postCode == null || !(postCode.matches("^[0-9]{1,}$"))) {
-            return "400: BadRequest!";
+            return "Error 400: BadRequest!";
         }
         AddressByPostCode recordList = postRepository.searchByPostCode(postCode);
         if (recordList == null) {
-            return "404: NotFound!!";
+            return "Error 404: NotFound!!";
         }
         return "{\"data\":[" + recordList.toString() + "],\"result\":\"success\"}";
     }
@@ -69,14 +73,23 @@ public class SearchController {
             @PathVariable(value = "pr") String prefectureCode) {
         prefectureCode = prefectureCode.replace(" ", "").replace("-", "");
         if (prefectureCode == null || !(prefectureCode.matches("^[0-9]{1,}$"))) {
-            return "400: BadRequest!";//HttpStatus.BAD_REQUEST
+            return "Error 400: BadRequest!";//HttpStatus.BAD_REQUEST
         }
         List<CityByPrefecture> recordList = prefectureRepository.searchByPrefectureCode(prefectureCode);
         if (recordList == null || recordList.isEmpty()) {
-            return "404: NotFound!!";
+            return "Error 404: NotFound!!";
         }
         StringBuilder result = new StringBuilder();
         recordList.forEach(record -> result.append(record.toString() + ","));
         return "{\"data\":[" + result.toString() + "],\"result\":\"success\"}";
+    }
+    /**
+     * Tất cả các Exception không được khai báo sẽ được xử lý tại đây
+     */
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public String handleAllException(Exception ex, WebRequest request) {
+        // quá trình kiểm soat lỗi diễn ra ở đây
+        return "Error 505: Server is busy!!!";
     }
 }
