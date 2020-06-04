@@ -27,18 +27,16 @@ import com.example.bean.CityByPrefecture;
  */
 @Repository
 public interface SearchByPrefecture extends JpaRepository<TblCityEntity, Long> {
-	
-	/**
-	 * Search data by prefectureCode
-	 * 
-	 * @param prefectureCode
-	 * @return List<CityByPrefecture>
-	 */
-	@Query("SELECT new com.example.bean.CityByPrefecture(c.code, p.prefecture, c.city, " +
-			"p.prefectureKana, c.cityKana, p.prefectureCode) " +
-			"FROM TblCityEntity c " +
-			"INNER JOIN c.tblPrefectureEntity p " +
-			"WHERE p.prefectureCode = :prefectureCode")
-	List<CityByPrefecture> searchByPrefectureCode(@Param("prefectureCode") String prefectureCode);
-
+    /**
+     * Search data by prefectureCode
+     *
+     * @param prefectureCode
+     * @return List<CityByPrefecture>
+     */
+    @Query("SELECT new com.example.bean.CityByPrefecture(c.code, p.prefecture, c.city, " +
+            "p.prefectureKana, c.cityKana, p.prefectureCode) " +
+            "FROM TblCityEntity c " +
+            "INNER JOIN c.tblPrefectureEntity p " +
+            "WHERE p.prefectureCode = :prefectureCode")
+    List<CityByPrefecture> searchByPrefectureCode(@Param("prefectureCode") String prefectureCode);
 }

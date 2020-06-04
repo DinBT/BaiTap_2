@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.example.bean.AddressByPostCode;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 /**
@@ -32,7 +32,7 @@ import org.springframework.web.context.request.WebRequest;
  *
  * @author DinBT
  */
-@RestControllerAdvice
+@RestController
 @RequestMapping("address")
 public class SearchController {
 
@@ -83,13 +83,5 @@ public class SearchController {
         recordList.forEach(record -> result.append(record.toString() + ","));
         return "{\"data\":[" + result.toString() + "],\"result\":\"success\"}";
     }
-    /**
-     * Tất cả các Exception không được khai báo sẽ được xử lý tại đây
-     */
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-    public String handleAllException(Exception ex, WebRequest request) {
-        // quá trình kiểm soat lỗi diễn ra ở đây
-        return "Error 505: Server is busy!!!";
-    }
+
 }
