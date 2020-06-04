@@ -84,6 +84,9 @@ public class AddressByPostCode {
     @NotNull
     private String prefectureCode;
 
+    public AddressByPostCode() {
+
+    }
 
     public AddressByPostCode(String code, String prefecture, String city, String area, String oldPostCode,
                              String postCode, String prefectureKana, String cityKana, String areaKana,

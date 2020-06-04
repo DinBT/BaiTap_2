@@ -37,6 +37,9 @@ public class CityByPrefecture {
     @JsonProperty("prefecture_code")
     private String prefectureCode;
 
+    public CityByPrefecture() {
+
+    }
 
     public CityByPrefecture(String code, String prefecture, String city,
                             String prefectureKana, String cityKana, String prefectureCode) {
