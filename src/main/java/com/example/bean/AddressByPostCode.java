@@ -85,7 +85,6 @@ public class AddressByPostCode {
     private String prefectureCode;
 
     public AddressByPostCode() {
-
     }
 
     public AddressByPostCode(String code, String prefecture, String city, String area, String oldPostCode,
@@ -238,23 +237,4 @@ public class AddressByPostCode {
         this.prefectureCode = prefectureCode;
     }
 
-    @Override
-    public String toString() {
-        return "{code\":" + code +
-                "\",\"old_post_code\":\"" + oldPostCode +
-                "\",\"post_code\":\"" + postCode +
-                "\",\"prefecture_kana\":\"" + prefectureKana +
-                "\",\"city_kana\":\"" + cityKana +
-                "\",\"area_kana\":\"" + areaKana +
-                "\",\"prefecture\":\"" + prefecture +
-                "\",\"city\":\"" + city +
-                "\",\"area\":\"" + area +
-                "\",\"multi_area\":" + multiArea +
-                ",\"koaza_area\":" + koazaArea +
-                ",\"chome_area\":" + chomeArea +
-                ",\"multi_post_area\":" + multiPostArea +
-                ",\"update_show\":" + updateShow +
-                ",\"change_reason\":" + changeReason +
-                ",\"prefecture_code\":\"" + prefectureCode + "\"}";
-    }
 }

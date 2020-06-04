@@ -99,14 +99,4 @@ public class CityByPrefecture {
         this.prefectureCode = prefectureCode;
     }
 
-    @Override
-    public String toString() {
-        return "{code\":" + code +
-                "\",\"prefecture\":\"" + prefecture +
-                "\",\"city\":\"" + city +
-                "\",\"prefecture_kana\":\"" + prefectureKana +
-                "\",\"city_kana\":\"" + cityKana +
-                ",\"prefecture_code\":\"" + prefectureCode + "}\"";
-
-    }
 }

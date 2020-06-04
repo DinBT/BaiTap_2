@@ -12,20 +12,21 @@ package com.example.controllers;
 
 import java.util.List;
 
-import com.example.reposistories.SearchByPostCode;
-import com.example.reposistories.SearchByPrefecture;
+import com.example.bean.AddressResult;
+import com.example.bean.ListCityResult;
+import com.example.exception.BadRequest;
+import com.example.exception.NotFound;
 import com.example.bean.CityByPrefecture;
+import com.example.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.example.bean.AddressByPostCode;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.WebRequest;
 
 /**
  * Controller for searching
@@ -34,14 +35,10 @@ import org.springframework.web.context.request.WebRequest;
  */
 @RestController
 @RequestMapping("address")
-public class SearchController {
+public class TblCityController {
 
     @Autowired
-    private SearchByPostCode postRepository;
-
-    @Autowired
-    private SearchByPrefecture prefectureRepository;
-
+    private SearchService searchService;
 
     /**
      * Solving and response data for request from client if user search by postCode
@@ -50,16 +47,16 @@ public class SearchController {
      * @return String: city found
      */
     @RequestMapping(value = "post/{pc}", method = RequestMethod.GET)
-    public String searchByPostCode(@PathVariable(value = "pc") String postCode) {
+    public ResponseEntity<AddressResult> searchByPostCode(@PathVariable(value = "pc") String postCode) {
         postCode = postCode.replaceAll(" ", "").replaceAll("-", "");
         if (postCode == null || !(postCode.matches("^[0-9]{1,}$"))) {
-            return "Error 400: BadRequest!";
+            throw new BadRequest("Bad Request");
         }
-        AddressByPostCode recordList = postRepository.searchByPostCode(postCode);
+        List<AddressByPostCode> recordList = searchService.searchByPostCode(postCode);
         if (recordList == null) {
-            return "Error 404: NotFound!!";
+            throw new NotFound("Not Found");
         }
-        return "{\"data\":[" + recordList.toString() + "],\"result\":\"success\"}";
+        return new ResponseEntity<>(new AddressResult(recordList), HttpStatus.OK);
     }
 
     /**
@@ -69,19 +66,17 @@ public class SearchController {
      * @return String: result found
      */
     @RequestMapping(value = "prefecture/{pr}", method = RequestMethod.GET)
-    public String searchByPrefectureCode(
+    public ResponseEntity<ListCityResult> searchByPrefectureCode(
             @PathVariable(value = "pr") String prefectureCode) {
         prefectureCode = prefectureCode.replace(" ", "").replace("-", "");
         if (prefectureCode == null || !(prefectureCode.matches("^[0-9]{1,}$"))) {
-            return "Error 400: BadRequest!";//HttpStatus.BAD_REQUEST
+            throw new BadRequest("Bad Request");
         }
-        List<CityByPrefecture> recordList = prefectureRepository.searchByPrefectureCode(prefectureCode);
+        List<CityByPrefecture> recordList = searchService.searchByPrefectureCode(prefectureCode);
         if (recordList == null || recordList.isEmpty()) {
-            return "Error 404: NotFound!!";
+            throw new NotFound("Not Found");
         }
-        StringBuilder result = new StringBuilder();
-        recordList.forEach(record -> result.append(record.toString() + ","));
-        return "{\"data\":[" + result.toString() + "],\"result\":\"success\"}";
+        return new ResponseEntity<>(new ListCityResult(recordList), HttpStatus.OK);
     }
 
 }

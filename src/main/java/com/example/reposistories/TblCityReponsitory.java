@@ -10,33 +10,47 @@
  */
 package com.example.reposistories;
 
-import java.util.List;
-
+import com.example.bean.CityByPrefecture;
 import com.example.entities.TblCityEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.example.bean.CityByPrefecture;
+import com.example.bean.AddressByPostCode;
+
+import java.util.List;
 
 /**
- * Repository interface for tbl_prefecture
+ * Repository interface for tbl_post
  *
  * @author DinBT
  */
 @Repository
-public interface SearchByPrefecture extends JpaRepository<TblCityEntity, Long> {
+public interface TblCityReponsitory extends JpaRepository<TblCityEntity, Long> {
+
     /**
-     * Search data by prefectureCode
+     * Search data by postCode
      *
-     * @param prefectureCode
-     * @return List<CityByPrefecture>
+     * @param postCode
+     * @return AddressByPostCode
      */
+    @Query("SELECT new com.example.bean.AddressByPostCode(c.code, p.prefecture, c.city, " +
+            "a.area, old.oldPostCode, post.postCode, p.prefectureKana, c.cityKana, a.areaKana, post.multiArea, " +
+            "a.koazaArea, a.chomeArea, a.multiPostArea, post.updateShow, post.changeReason, p.prefectureCode) " +
+            "FROM TblCityEntity c " +
+            "INNER JOIN c.tblPrefectureEntity p " +
+            "INNER JOIN c.tblAreaEntityList a " +
+            "INNER JOIN a.tblOldPostEntity old " +
+            "INNER JOIN a.tblPostEntity post " +
+            "WHERE post.postCode = :postCode")
+    List<AddressByPostCode> searchByPostCode(@Param("postCode") String postCode);
+
     @Query("SELECT new com.example.bean.CityByPrefecture(c.code, p.prefecture, c.city, " +
             "p.prefectureKana, c.cityKana, p.prefectureCode) " +
             "FROM TblCityEntity c " +
             "INNER JOIN c.tblPrefectureEntity p " +
             "WHERE p.prefectureCode = :prefectureCode")
     List<CityByPrefecture> searchByPrefectureCode(@Param("prefectureCode") String prefectureCode);
+
 }
