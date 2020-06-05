@@ -34,8 +34,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @author DinBT
  */
 @RestController
-@RequestMapping("address")
-public class TblCityController {
+@RequestMapping("search")
+public class SearchController {
 
     @Autowired
     private SearchService searchService;
@@ -46,7 +46,7 @@ public class TblCityController {
      * @param postCode: postCode to search
      * @return ResponseEntity<AddressResult>: address found
      */
-    @RequestMapping(value = "post/{pc}", method = RequestMethod.GET)
+    @RequestMapping(value = "/post/{pc}", method = RequestMethod.GET)
     public ResponseEntity<AddressResult> searchByPostCode(@PathVariable(value = "pc") String postCode) {
         postCode = postCode.replaceAll(" ", "").replaceAll("-", "");
         if (postCode.equals("") || !(postCode.matches("^[0-9]{1,}$"))) {
@@ -65,7 +65,7 @@ public class TblCityController {
      * @param prefectureCode: prefectureCode to search
      * @return ResponseEntity<ListCityResult>: list city result
      */
-    @RequestMapping(value = "prefecture/{pr}", method = RequestMethod.GET)
+    @RequestMapping(value = "/prefecture/{pr}", method = RequestMethod.GET)
     public ResponseEntity<ListCityResult> searchByPrefectureCode(
             @PathVariable(value = "pr") String prefectureCode) {
         prefectureCode = prefectureCode.replace(" ", "").replace("-", "");
@@ -78,5 +78,4 @@ public class TblCityController {
         }
         return new ResponseEntity<>(new ListCityResult(recordList), HttpStatus.OK);
     }
-
 }

@@ -13,6 +13,7 @@ package com.example.reposistories;
 import com.example.bean.CityByPrefecture;
 import com.example.entities.TblCityEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -60,4 +61,18 @@ public interface TblCityReponsitory extends JpaRepository<TblCityEntity, Long> {
             "WHERE p.prefectureCode = :prefectureCode")
     List<CityByPrefecture> searchByPrefectureCode(@Param("prefectureCode") String prefectureCode);
 
+    @Modifying
+    @Query(value = "UPDATE tbl_city " +
+            "SET code = ?1, city_kana = ?2, city = ?3, prefecture_id = ?4 " +
+            "WHERE city_id = ?5", nativeQuery = true)
+    void updateTblCity(String code, String cityKana, String city, long pr_id, long cityId);
+
+    @Modifying
+    @Query(value = "INSERT tbl_city " +
+            "SET code = ?1, city_kana = ?2, city = ?3, prefecture_id = ?4 ", nativeQuery = true)
+    void addTblCity(String code, String cityKana, String city, long pr_id);
+
+    @Modifying
+    @Query(value = "DELETE FROM tbl_city WHERE city_id = ?1", nativeQuery = true)
+    void deleteTblCity(long cityId);
 }

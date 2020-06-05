@@ -47,6 +47,14 @@ public class TblPrefectureEntity {
 	@OneToMany(targetEntity = TblCityEntity.class, mappedBy = "id", fetch = FetchType.LAZY)
 	private List<TblCityEntity> tblCityEntityList;
 
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	public String getPrefecture() {
 		return prefecture;
 	}

@@ -12,7 +12,7 @@ package com.example.ControllersTest;
 
 import com.example.bean.AddressByPostCode;
 import com.example.bean.CityByPrefecture;
-import com.example.controllers.TblCityController;
+import com.example.controllers.SearchController;
 import com.example.exception.BadRequest;
 import com.example.exception.NotFound;
 import com.example.service.SearchService;
@@ -44,7 +44,7 @@ import static org.mockito.Mockito.when;
 public class TblCityControllerTest {
 
     @InjectMocks
-    private TblCityController tblCityController;
+    private SearchController tblCityController;
 
     @Mock
     private SearchService searchService;
@@ -91,11 +91,10 @@ public class TblCityControllerTest {
         Assert.assertEquals(3, listCity.size());
         verify(searchService, Mockito.times(1)).searchByPrefectureCode("13");
         verify(searchService, Mockito.times(1)).searchByPrefectureCode(argCaptor.capture());
-
     }
 
     /**
-     * test when have not found error
+     * test when have not found reccord
      */
     @Test(expected = NotFound.class)
     public void testNotFound() {

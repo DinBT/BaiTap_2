@@ -1,6 +1,6 @@
 package com.example;
 
-import com.example.controllers.TblCityController;
+import com.example.controllers.SearchController;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +12,7 @@ import static org.mockito.Mockito.doThrow;
 class AddressApplicationTests {
 
 	@Mock
-	private TblCityController tblCityController;
+	private SearchController tblCityController;
 
 	@Test
 	void contextLoads() {

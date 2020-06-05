@@ -12,16 +12,11 @@ package com.example.ControllersTest;
 
 import com.example.bean.AddressByPostCode;
 import com.example.bean.CityByPrefecture;
-import com.example.controllers.TblCityController;
-import com.example.exception.BadRequest;
-import com.example.exception.NotFound;
 import com.example.reposistories.TblCityReponsitory;
 import com.example.service.SearchService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
