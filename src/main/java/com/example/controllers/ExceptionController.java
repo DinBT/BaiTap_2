@@ -36,7 +36,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
     /**
      * Handle NotFound, when no result found
      *
-     * @return ResponseEntity<String>: error message and status code 404
+     * @return ResponseEntity<ErrorResult>: error message and status code 404
      */
     @ExceptionHandler(NotFound.class)
     public ResponseEntity<ErrorResult> handleRecordNotFoundException() {
@@ -48,7 +48,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
      * Handle BadRequest, when client sending a bad request,
      * such as null value or not a half size number
      *
-     * @return ResponseEntity<String>: error message and status code 400
+     * @return ResponseEntity<ErrorResult>: error message and status code 400
      */
     @ExceptionHandler(BadRequest.class)
     public ResponseEntity<ErrorResult> handleBadRequestException() {
@@ -57,10 +57,9 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
     }
 
     /**
-     * Handle BadRequest, when client sending a bad request,
-     * such as null value or not a half size number
+     * Handle BadRequest, when client sending a bad data,
      *
-     * @return ResponseEntity<String>: error message and status code 400
+     * @return ResponseEntity<ErrorResult>: error message and status code 303
      */
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ErrorResult> handleNumException() {
@@ -68,6 +67,11 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.SEE_OTHER);
     }
 
+    /**
+     * Handle BadRequest, when client sending a table operation does not exist
+     *
+     * @return ResponseEntity<ErrorResult>: error message and status code 503
+     */
     @ExceptionHandler(Faill.class)
     public ResponseEntity<ErrorResult> handleFaillException() {
         ErrorResult error = new ErrorResult("503", "wrong manipulation !!!");

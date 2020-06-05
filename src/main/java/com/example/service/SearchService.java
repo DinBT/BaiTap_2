@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Service for searching by postCode and prefectureCode
+ * processing flow when search by postCode or prefecture
  *
  * @author DinBT
  */

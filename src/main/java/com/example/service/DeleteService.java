@@ -1,3 +1,13 @@
+/*
+ * Copyright 2015-2016 Classmethod, Inc.
+ * All Rights Reserved.
+ *
+ * NOTICE:  All source code, documentation and other information
+ * contained herein is, and remains the property of Classmethod, Inc.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Classmethod, Inc.
+ */
 package com.example.service;
 
 import com.example.exception.Faill;
@@ -10,6 +20,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * processing flow when delete record
+ *
+ * @author DinBT
+ */
 @Service
 public class DeleteService {
     @Autowired
@@ -28,7 +43,7 @@ public class DeleteService {
     private TblOldPostReponsitory oldPostRepository;
 
     /**
-     * Edit data and update to the database by postId
+     * delete data and update to the database by Id
      *
      * @param table    : postId to edit
      * @param id : edited data

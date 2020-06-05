@@ -1,3 +1,13 @@
+/*
+ * Copyright 2015-2016 Classmethod, Inc.
+ * All Rights Reserved.
+ *
+ * NOTICE:  All source code, documentation and other information
+ * contained herein is, and remains the property of Classmethod, Inc.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Classmethod, Inc.
+ */
 package com.example.common;
 
 import com.example.bean.TblArea;
@@ -5,10 +15,14 @@ import com.example.bean.TblCity;
 import com.example.bean.TblOldPost;
 import com.example.bean.TblPost;
 import com.example.bean.TblPrefecture;
-import com.example.entities.TblCityEntity;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
+/**
+ * Class for common methods
+ *
+ * @author DinBT
+ */
 public class Common {
     /**
      * Convert jsonData from URL into a TblCity object
