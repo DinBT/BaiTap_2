@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author DinBT
  */
 @RestController
-@RequestMapping("post_offices/city")
+@RequestMapping("address/city")
 public class CityController {
 
     @Autowired
