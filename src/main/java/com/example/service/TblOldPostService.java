@@ -34,9 +34,8 @@ public class TblOldPostService {
      * @param jsonData
      */
     @Transactional(rollbackFor = Exception.class)
-    public void insertTblOldPost(String jsonData) {
-        JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonData);
-        String oldPostCode = jsonObject.get("old_post_code").toString();
+    public void insertTblOldPost(JSONObject jsonData) {
+        String oldPostCode = jsonData.get("old_post_code").toString();
         oldPostReponsitory.insertTblOldPost(oldPostCode);
     }
 
@@ -47,12 +46,11 @@ public class TblOldPostService {
      * @param oldPostId
      */
     @Transactional(rollbackFor = Exception.class)
-    public void updateTblOldPost(String jsonData, int oldPostId) {
+    public void updateTblOldPost(JSONObject jsonData, int oldPostId) {
         if (oldPostReponsitory.getOldPostCodeById(oldPostId) == null) {
             throw new NotFound("edit a tbl_old_post Record That Not Existed");
         }
-        JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonData);
-        String oldPostCode = jsonObject.get("old_post_code").toString();
+        String oldPostCode = jsonData.get("old_post_code").toString();
         oldPostReponsitory.updateTblOldPost(oldPostCode, oldPostId);
     }
 

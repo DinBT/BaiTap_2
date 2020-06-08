@@ -41,11 +41,10 @@ public class TblPrefectureService {
      * @param jsonData
      */
     @Transactional(rollbackFor = Exception.class)
-    public void insertTblPrefecture(String jsonData) {
-        JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonData);
-        String prefecture = jsonObject.get("prefecture").toString();
-        String prefectureKana = jsonObject.get("prefecture_kana").toString();
-        String prefectureCode = jsonObject.get("prefecture_code").toString();
+    public void insertTblPrefecture(JSONObject jsonData) {
+        String prefecture = jsonData.get("prefecture").toString();
+        String prefectureKana = jsonData.get("prefecture_kana").toString();
+        String prefectureCode = jsonData.get("prefecture_code").toString();
         if (!Common.validateSTring(prefecture, prefectureKana)) {
             throw new BadRequest("Validate Not Passed");
         }
@@ -59,14 +58,13 @@ public class TblPrefectureService {
      * @param prefectureId
      */
     @Transactional(rollbackFor = Exception.class)
-    public void updateTblPrefecture(String jsonData, int prefectureId) {
+    public void updateTblPrefecture(JSONObject jsonData, int prefectureId) {
         if (prefectureReponsitory.getPrefectureKanaById(prefectureId) == null) {
             throw new NotFound("Update a tbl_prefecture Record That Not Existed");
         }
-        JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonData);
-        String prefecture = jsonObject.get("prefecture").toString();
-        String prefectureKana = jsonObject.get("prefecture_kana").toString();
-        String prefectureCode = jsonObject.get("prefecture_code").toString();
+        String prefecture = jsonData.get("prefecture").toString();
+        String prefectureKana = jsonData.get("prefecture_kana").toString();
+        String prefectureCode = jsonData.get("prefecture_code").toString();
         if (!Common.validateSTring(prefecture, prefectureKana)) {
             throw new BadRequest("Validate Not Passed");
         }

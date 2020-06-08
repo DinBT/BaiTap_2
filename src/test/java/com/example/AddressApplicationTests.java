@@ -10,8 +10,8 @@ import static org.mockito.Mockito.doThrow;
 @SpringBootTest
 class AddressApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
 }

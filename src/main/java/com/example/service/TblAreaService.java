@@ -38,16 +38,15 @@ public class TblAreaService {
      * @param jsonData
      */
     @Transactional(rollbackFor = Exception.class)
-    public void insertTblArea(String jsonData) {
-        JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonData);
-        String areaKana = jsonObject.get("area_kana").toString();
-        String area = jsonObject.get("area").toString();
-        int cityId = Integer.parseInt(jsonObject.get("city_id").toString());
-        int chomeArea = Integer.parseInt(jsonObject.get("chome_area").toString());
-        int koazaArea = Integer.parseInt(jsonObject.get("koaza_area").toString());
-        int multiPostArea = Integer.parseInt(jsonObject.get("multi_post_area").toString());
-        int postId = Integer.parseInt(jsonObject.get("post_id").toString());
-        int oldPostId = Integer.parseInt(jsonObject.get("old_post_id").toString());
+    public void insertTblArea(JSONObject jsonData) {
+        String areaKana = jsonData.get("area_kana").toString();
+        String area = jsonData.get("area").toString();
+        int cityId = Integer.parseInt(jsonData.get("city_id").toString());
+        int chomeArea = Integer.parseInt(jsonData.get("chome_area").toString());
+        int koazaArea = Integer.parseInt(jsonData.get("koaza_area").toString());
+        int multiPostArea = Integer.parseInt(jsonData.get("multi_post_area").toString());
+        int postId = Integer.parseInt(jsonData.get("post_id").toString());
+        int oldPostId = Integer.parseInt(jsonData.get("old_post_id").toString());
         if (!Common.validateSTring(area, areaKana)) {
             throw new BadRequest("Validate Not Passed");
         }
@@ -65,19 +64,18 @@ public class TblAreaService {
      * @param areaId
      */
     @Transactional(rollbackFor = Exception.class)
-    public void updateTblArea(String jsonData, int areaId) {
+    public void updateTblArea(JSONObject jsonData, int areaId) {
         if (areaReponsitory.getAreaKanaById(areaId) == null) {
             throw new NotFound("Update a tbl_area Record That Not Existed");
         }
-        JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonData);
-        String areaKana = jsonObject.get("area_kana").toString();
-        String area = jsonObject.get("area").toString();
-        int cityId = Integer.parseInt(jsonObject.get("city_id").toString());
-        int chomeArea = Integer.parseInt(jsonObject.get("chome_area").toString());
-        int koazaArea = Integer.parseInt(jsonObject.get("koaza_area").toString());
-        int multiPostArea = Integer.parseInt(jsonObject.get("multi_post_area").toString());
-        int postId = Integer.parseInt(jsonObject.get("post_id").toString());
-        int oldPostId = Integer.parseInt(jsonObject.get("old_post_id").toString());
+        String areaKana = jsonData.get("area_kana").toString();
+        String area = jsonData.get("area").toString();
+        int cityId = Integer.parseInt(jsonData.get("city_id").toString());
+        int chomeArea = Integer.parseInt(jsonData.get("chome_area").toString());
+        int koazaArea = Integer.parseInt(jsonData.get("koaza_area").toString());
+        int multiPostArea = Integer.parseInt(jsonData.get("multi_post_area").toString());
+        int postId = Integer.parseInt(jsonData.get("post_id").toString());
+        int oldPostId = Integer.parseInt(jsonData.get("old_post_id").toString());
         if (!Common.validateSTring(area, areaKana)) {
             throw new BadRequest("Validate Not Passed");
         }
@@ -115,7 +113,7 @@ public class TblAreaService {
      * @return null : if data is not existed
      */
     private Integer checkExist(String areaKana, String area, int cityId, int chomeArea, int koazaArea,
-                                   int multiPostArea, int postId, int oldPostId) {
+                               int multiPostArea, int postId, int oldPostId) {
         return areaReponsitory.getAreaById(areaKana, area, cityId, chomeArea, koazaArea, multiPostArea,
                 postId, oldPostId);
     }

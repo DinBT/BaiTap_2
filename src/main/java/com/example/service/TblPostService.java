@@ -42,12 +42,11 @@ public class TblPostService {
      * @param jsonData
      */
     @Transactional(rollbackFor = Exception.class)
-    public void insertTblPost(String jsonData) {
-        JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonData);
-        String postCode = jsonObject.get("post_code").toString();
-        int updateShow = Integer.parseInt(jsonObject.get("update_show").toString());
-        int changeReason = Integer.parseInt(jsonObject.get("change_reason").toString());
-        int multiArea = Integer.parseInt(jsonObject.get("multi_area").toString());
+    public void insertTblPost(JSONObject jsonData) {
+        String postCode = jsonData.get("post_code").toString();
+        int updateShow = Integer.parseInt(jsonData.get("update_show").toString());
+        int changeReason = Integer.parseInt(jsonData.get("change_reason").toString());
+        int multiArea = Integer.parseInt(jsonData.get("multi_area").toString());
         if (!postCode.matches(Common.POST_CODE)) {
             throw new BadRequest("Validate Not Passed");
         }
@@ -61,15 +60,14 @@ public class TblPostService {
      * @param postId
      */
     @Transactional(rollbackFor = Exception.class)
-    public void updateTblPost(String jsonData, int postId) {
+    public void updateTblPost(JSONObject jsonData, int postId) {
         if (postReponsitory.getPostCodeById(postId) == null) {
             throw new NotFound("Update a tbl_post Record That Not Existed");
         }
-        JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonData);
-        String postCode = jsonObject.get("post_code").toString();
-        int updateShow = Integer.parseInt(jsonObject.get("update_show").toString());
-        int changeReason = Integer.parseInt(jsonObject.get("change_reason").toString());
-        int multiArea = Integer.parseInt(jsonObject.get("multi_area").toString());
+        String postCode = jsonData.get("post_code").toString();
+        int updateShow = Integer.parseInt(jsonData.get("update_show").toString());
+        int changeReason = Integer.parseInt(jsonData.get("change_reason").toString());
+        int multiArea = Integer.parseInt(jsonData.get("multi_area").toString());
         if (!postCode.matches(Common.POST_CODE)) {
             throw new BadRequest("Validate Not Passed");
         }

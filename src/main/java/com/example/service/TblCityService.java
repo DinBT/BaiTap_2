@@ -36,12 +36,11 @@ public class TblCityService {
      * @param jsonData
      */
     @Transactional(rollbackFor = Exception.class)
-    public void insertTblCity(String jsonData) {
-        JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonData);
-        String code = jsonObject.get("code").toString();
-        String cityKana = jsonObject.get("city_kana").toString();
-        String city = jsonObject.get("city").toString();
-        int prefectureId = Integer.parseInt(jsonObject.get("prefecture_id").toString());
+    public void insertTblCity(JSONObject jsonData) {
+        String code = jsonData.get("code").toString();
+        String cityKana = jsonData.get("city_kana").toString();
+        String city = jsonData.get("city").toString();
+        int prefectureId = Integer.parseInt(jsonData.get("prefecture_id").toString());
         if (!Common.validateSTring(city, cityKana)) {
             throw new BadRequest("Validate Not Passed");
         }
@@ -55,15 +54,14 @@ public class TblCityService {
      * @param cityId
      */
     @Transactional(rollbackFor = Exception.class)
-    public void updateTblCity(String jsonData, int cityId) {
+    public void updateTblCity(JSONObject jsonData, int cityId) {
         if (tblCityReponsitory.getCodeById(cityId) == null) {
             throw new NotFound("Update a tbl_city Record That Not Existed");
         }
-        JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonData);
-        String code = jsonObject.get("code").toString();
-        String cityKana = jsonObject.get("city_kana").toString();
-        String city = jsonObject.get("city").toString();
-        int prefectureId = Integer.parseInt(jsonObject.get("prefecture_id").toString());
+        String code = jsonData.get("code").toString();
+        String cityKana = jsonData.get("city_kana").toString();
+        String city = jsonData.get("city").toString();
+        int prefectureId = Integer.parseInt(jsonData.get("prefecture_id").toString());
         if (!Common.validateSTring(city, cityKana)) {
             throw new BadRequest("Validate Not Passed");
         }

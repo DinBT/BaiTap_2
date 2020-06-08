@@ -12,6 +12,7 @@ package com.example.controllers;
 
 import com.example.bean.SuccessResult;
 import com.example.service.TblCityService;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +41,7 @@ public class CityController {
      * @return ResponseEntity<SuccessResult>
      */
     @RequestMapping(value = "/add/{jsonData}", method = RequestMethod.GET)
-    public ResponseEntity<SuccessResult> insertTblArea(@PathVariable(value = "jsonData") String jsonData) {
+    public ResponseEntity<SuccessResult> insertTblArea(@PathVariable(value = "jsonData") JSONObject jsonData) {
         cityService.insertTblCity(jsonData);
         return new ResponseEntity<>(new SuccessResult("200", "record added successfully"), HttpStatus.OK);
     }
@@ -52,7 +53,7 @@ public class CityController {
      * @return ResponseEntity<SuccessResult>
      */
     @RequestMapping(value = "/edit/{id}/{jsonData}", method = RequestMethod.GET)
-    public ResponseEntity<SuccessResult> updateTblArea(@PathVariable(value = "jsonData") String jsonData,
+    public ResponseEntity<SuccessResult> updateTblArea(@PathVariable(value = "jsonData") JSONObject jsonData,
                                                        @PathVariable(value = "id") int id) {
         cityService.updateTblCity(jsonData, id);
         return new ResponseEntity<>(new SuccessResult("200", "record edited successfully"), HttpStatus.OK);
