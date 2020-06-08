@@ -85,7 +85,7 @@ public class PostController {
      * @param postCode: postCode to search
      * @return ResponseEntity<AddressResult>: address found
      */
-    @RequestMapping(value = "/post/{pc}", method = RequestMethod.GET)
+    @RequestMapping(value = "/search/{pc}", method = RequestMethod.GET)
     public ResponseEntity<AddressResult> searchByPostCode(@PathVariable(value = "pc") String postCode) {
         postCode = postCode.replaceAll(" ", "").replaceAll("-", "");
         if (postCode.equals("") || !(postCode.matches("^[0-9]{1,}$"))) {
