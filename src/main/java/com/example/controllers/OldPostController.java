@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author DinBT
  */
 @RestController
-@RequestMapping("post_offices/old_post")
+@RequestMapping("address/old_post")
 public class OldPostController {
 
     @Autowired
