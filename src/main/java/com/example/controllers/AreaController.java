@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author DinBT
  */
 @RestController
-@RequestMapping("post_offices/area")
+@RequestMapping("address/area")
 public class AreaController {
 
     @Autowired
