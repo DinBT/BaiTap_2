@@ -33,7 +33,7 @@ import java.util.List;
  * @author DinBT
  */
 @RestController
-@RequestMapping("post_offices/prefecture")
+@RequestMapping("address/prefecture")
 public class PrefectureController {
 
     @Autowired
