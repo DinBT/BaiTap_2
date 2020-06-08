@@ -34,7 +34,7 @@ import java.util.List;
  * @author DinBT
  */
 @RestController
-@RequestMapping("post_offices/post")
+@RequestMapping("address/post")
 public class PostController {
 
     @Autowired
