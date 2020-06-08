@@ -32,7 +32,8 @@ public interface TblOldPostReponsitory extends JpaRepository<TblOldPostEntity, L
      */
     @Modifying
     @Query(value = "UPDATE tbl_old_post " +
-            "SET old_post_code = ?1 WHERE old_post_id = ?2", nativeQuery = true)
+            "SET old_post_code = ?1 " +
+            "WHERE old_post_id = ?2", nativeQuery = true)
     void updateTblOldPost(String oldPostCode, long oldPostId);
 
 
@@ -44,7 +45,7 @@ public interface TblOldPostReponsitory extends JpaRepository<TblOldPostEntity, L
     @Modifying
     @Query(value = "INSERT tbl_old_post " +
             "SET old_post_code = ?1 ", nativeQuery = true)
-    void addTblOldPost(String oldPostCode);
+    void insertTblOldPost(String oldPostCode);
 
 
     /**
@@ -55,4 +56,15 @@ public interface TblOldPostReponsitory extends JpaRepository<TblOldPostEntity, L
     @Modifying
     @Query(value = "DELETE FROM tbl_old_post  WHERE old_post_id = ?1", nativeQuery = true)
     void deleteTblOldPost(long oldPostId);
+
+    /**
+     * Get old_post_code by oldPostId for checking if data not existed
+     *
+     * @param oldPostId
+     * @return String old_post_code
+     */
+    @Query(value = "SELECT old_post_code " +
+            "FROM tbl_old_post " +
+            "WHERE old_post_id = ?1", nativeQuery = true)
+    String getOldPostCodeById(int oldPostId);
 }

@@ -10,13 +10,6 @@
  */
 package com.example.common;
 
-import com.example.bean.TblArea;
-import com.example.bean.TblCity;
-import com.example.bean.TblOldPost;
-import com.example.bean.TblPost;
-import com.example.bean.TblPrefecture;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 
 /**
  * Class for common methods
@@ -24,88 +17,53 @@ import org.json.simple.JSONValue;
  * @author DinBT
  */
 public class Common {
+
+    public static final String KANJI = "^[一-龥]+$";
+
+    public static final String POST_CODE = "^(?=.{7}$).*[0-9]+-{1}[0-9]+-{1}[0-9]+$";
+
     /**
-     * Convert jsonData from URL into a TblCity object
+     * Check if characters in string are all katakana
      *
-     * @param jsonText
-     * @return TblCity
+     * @param text : String to check
+     * @return true: All is Katakana
      */
-    public static TblCity dataToTblCity(String jsonText) {
-        JSONObject jsonData = (JSONObject) JSONValue.parse(jsonText);
-        TblCity tblCity = new TblCity(
-                Integer.parseInt(jsonData.get("city_id").toString()),
-                jsonData.get("code").toString(),
-                jsonData.get("city_kana").toString(),
-                jsonData.get("city").toString(),
-                Integer.parseInt(jsonData.get("prefecture_id").toString()));
-        return tblCity;
+    public static boolean isKatakana(String text) {
+        for (int i = 0; i < text.length(); i++) {
+            char c = text.charAt(i);
+            if ((Character.UnicodeBlock.of(c) != Character.UnicodeBlock.KATAKANA) && (isNumber(c + "") == false)
+                    && (Character.isWhitespace(c) == false)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
-     * Convert jsonData from URL into a TblArea object
+     * Cheking if a character is half size number
      *
-     * @param jsonText
-     * @return TblArea
+     * @param text : Character to check
+     * @return true : Character is half size number
      */
-    public static TblArea dataToTblArea(String jsonText) {
-        JSONObject jsonData = (JSONObject) JSONValue.parse(jsonText);
-        TblArea tblArea = new TblArea(
-                Integer.parseInt(jsonData.get("area_id").toString()),
-                jsonData.get("area_kana").toString(),
-                jsonData.get("area").toString(),
-                Integer.parseInt(jsonData.get("city_id").toString()),
-                Integer.parseInt(jsonData.get("chome_area").toString()),
-                Integer.parseInt(jsonData.get("koaza_area").toString()),
-                Integer.parseInt(jsonData.get("multi_post_area").toString()),
-                Integer.parseInt(jsonData.get("post_id").toString()),
-                Integer.parseInt(jsonData.get("old_post_id").toString()));
-        return tblArea;
+    public static boolean isNumber(String text) {
+        for (int i = 0; i < text.length(); i++) {
+            char c = text.charAt(i);
+            int x = (int) c;
+            if ((48 <= x) && (x <= 57)) { // 0 - 9 in ASCII
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
-     * Convert jsonData from URL into a TblPost object
+     * Check half size number
      *
-     * @param jsonText
-     * @return TblPost
+     * @param text:     Text to check
+     * @param textKana: format kana for text
+     * @return true: Text is true format
      */
-    public static TblPost dataToTblPost(String jsonText) {
-        JSONObject jsonData = (JSONObject) JSONValue.parse(jsonText);
-        TblPost tblPost = new TblPost(
-                Integer.parseInt(jsonData.get("post_id").toString()),
-                jsonData.get("post_code").toString(),
-                Integer.parseInt(jsonData.get("update_show").toString()),
-                Integer.parseInt(jsonData.get("change_reason").toString()),
-                Integer.parseInt(jsonData.get("multi_area").toString()));
-        return tblPost;
-    }
-
-    /**
-     * Convert jsonData from URL into a TblOldPost object
-     *
-     * @param jsonText
-     * @return TblOldPost
-     */
-    public static TblOldPost dataToTblOldPost(String jsonText) {
-        JSONObject jsonData = (JSONObject) JSONValue.parse(jsonText);
-        TblOldPost tblOldPost = new TblOldPost(
-                Integer.parseInt(jsonData.get("old_post_id").toString()),
-                jsonData.get("old_post_code").toString());
-        return tblOldPost;
-    }
-
-    /**
-     * Convert jsonData from URL into a TblPrefecture object
-     *
-     * @param jsonText
-     * @return TblPrefecture
-     */
-    public static TblPrefecture dataToTblPrefecture(String jsonText) {
-        JSONObject jsonData = (JSONObject) JSONValue.parse(jsonText);
-        TblPrefecture tblCity = new TblPrefecture(
-                Integer.parseInt(jsonData.get("prefecture_id").toString()),
-                jsonData.get("prefecture_kana").toString(),
-                jsonData.get("prefecture").toString(),
-                jsonData.get("prefecture_code").toString());
-        return tblCity;
+    public static boolean validateSTring(String text, String textKana) {
+        return (text.matches(KANJI) && isKatakana(textKana));
     }
 }

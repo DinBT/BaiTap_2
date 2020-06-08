@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 /**
- * Bean save results searching by prefectureCode
+ * Bean save results searching by prefectureCode to view
  *
  * @author DinBT
  */

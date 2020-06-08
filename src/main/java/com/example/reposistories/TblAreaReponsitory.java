@@ -39,12 +39,19 @@ public interface TblAreaReponsitory extends JpaRepository<TblAreaEntity, Long> {
      */
     @Modifying
     @Query(value = "UPDATE tbl_area " +
-            "SET area_kana = ?1, area = ?2, city_id = ?3, chome_area = ?4, koaza_area = ?5, multi_post_area = ?6, post_id = ?7, old_post_id = ?8 " +
+            "SET area_kana = ?1, " +
+            "area = ?2, " +
+            "city_id = ?3, " +
+            "chome_area = ?4, " +
+            "koaza_area = ?5," +
+            " multi_post_area = ?6," +
+            " post_id = ?7, " +
+            "old_post_id = ?8 " +
             "WHERE area_id = ?9", nativeQuery = true)
     void updateTblArea(String areaKana, String area, long cityId, long chomeArea, long koazaArea, long multiPostArea, long postId, long oldPostId, long areaId);
 
     /**
-     * add data
+     * Insert new data into tbl_area
      *
      * @param areaKana      : data of area_kana column
      * @param area          : data of area column
@@ -57,8 +64,15 @@ public interface TblAreaReponsitory extends JpaRepository<TblAreaEntity, Long> {
      */
     @Modifying
     @Query(value = "INSERT tbl_area " +
-            "SET area_kana = ?1, area = ?2, city_id = ?3, chome_area = ?4, koaza_area = ?5, multi_post_area = ?6, post_id = ?7, old_post_id = ?8 ", nativeQuery = true)
-    void addTblArea(String areaKana, String area, long cityId, long chomeArea, long koazaArea, long multiPostArea, long postId, long oldPostId);
+            "SET area_kana = ?1, " +
+            "area = ?2, " +
+            "city_id = ?3, " +
+            "chome_area = ?4, " +
+            "koaza_area = ?5, " +
+            "multi_post_area = ?6, " +
+            "post_id = ?7, " +
+            "old_post_id = ?8 ", nativeQuery = true)
+    void insertTblArea(String areaKana, String area, long cityId, long chomeArea, long koazaArea, long multiPostArea, long postId, long oldPostId);
 
     /**
      * delete data
@@ -67,5 +81,44 @@ public interface TblAreaReponsitory extends JpaRepository<TblAreaEntity, Long> {
      */
     @Modifying
     @Query(value = "DELETE FROM tbl_area WHERE area_id = ?1", nativeQuery = true)
-    void deleteTblArea(long areaId);
+    void deleteFromTblArea(long areaId);
+
+
+    /**
+     * Select area_id for checking existed data when inserting new data
+     *
+     * @param areaKana      : data of area_kana column
+     * @param area          : data of area column
+     * @param cityId        : data of city_id column
+     * @param chomeArea     : data of chome_area column
+     * @param koazaArea     : data of koaza_area column
+     * @param multiPostArea : data of multi_post_area column
+     * @param postId        : data of post_id column
+     * @param oldPostId     : data of old_post_id column
+     * @return Integer : area_id
+     */
+    @Query(value = "SELECT area_id " +
+            "FROM tbl_area " +
+            "WHERE area_kana = ?1 " +
+            "AND area = ?2 " +
+            "AND city_id = ?3 " +
+            "AND chome_area = ?4 " +
+            "AND koaza_area = ?5 " +
+            "AND multi_post_area = ?6 " +
+            "AND post_id = ?7 " +
+            "AND old_post_id = ?8", nativeQuery = true)
+    Integer getAreaById(String areaKana, String area, int cityId, int chomeArea, int koazaArea,
+                        int multiPostArea, int postId, int oldPostId);
+
+    /**
+     * Get area_kana by area_id
+     *
+     * @param areaId
+     * @return String: area_kana
+     */
+    @Query(value = "SELECT area_kana " +
+            "FROM tbl_area " +
+            "WHERE area_id = ?1", nativeQuery = true)
+    String getAreaKanaById(int areaId);
+
 }

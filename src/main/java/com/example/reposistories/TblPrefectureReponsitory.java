@@ -10,11 +10,14 @@
  */
 package com.example.reposistories;
 
+import com.example.bean.CityByPrefecture;
 import com.example.entities.TblPrefectureEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * Repository interface for tbl_post
@@ -34,7 +37,9 @@ public interface TblPrefectureReponsitory extends JpaRepository<TblPrefectureEnt
      */
     @Modifying
     @Query(value = "UPDATE tbl_prefecture " +
-            "SET prefecture_kana = ?1, prefecture = ?2, prefecture_code = ?3 " +
+            "SET prefecture_kana = ?1, " +
+            "prefecture = ?2, " +
+            "prefecture_code = ?3 " +
             "WHERE prefecture_id = ?4 ", nativeQuery = true)
     void updateTblPrefecture(String prefectureKana, String prefecture, String prefectureCode, long prefectureId);
 
@@ -47,8 +52,10 @@ public interface TblPrefectureReponsitory extends JpaRepository<TblPrefectureEnt
      */
     @Modifying
     @Query(value = "INSERT tbl_prefecture " +
-            "SET prefecture_kana = ?1, prefecture = ?2, prefecture_code = ?3 ", nativeQuery = true)
-    void addTblPrefecture(String prefectureKana, String prefecture, String prefectureCode);
+            "SET prefecture_kana = ?1, " +
+            "prefecture = ?2, " +
+            "prefecture_code = ?3 ", nativeQuery = true)
+    void insertTblPrefecture(String prefectureKana, String prefecture, String prefectureCode);
 
     /**
      * delete data
@@ -58,4 +65,28 @@ public interface TblPrefectureReponsitory extends JpaRepository<TblPrefectureEnt
     @Modifying
     @Query(value = "DELETE FROM tbl_prefecture WHERE prefecture_id = ?1 ", nativeQuery = true)
     void deleteTblPrefecture(long prefectureId);
+
+    /**
+     * Get prefecture_kana from prefectureId for checking existed record
+     *
+     * @param prefectureId
+     * @return String : prefecture_kana
+     */
+    @Query(value = "SELECT prefecture_kana " +
+            "FROM tbl_prefecture " +
+            "WHERE prefecture_id = ?1", nativeQuery = true)
+    String getPrefectureKanaById(int prefectureId);
+
+    /**
+     * Search data by prefecture
+     *
+     * @param prefectureCode
+     * @return List<CityByPrefecture>
+     */
+    @Query("SELECT new com.example.bean.CityByPrefecture(c.code, p.prefecture, c.city, " +
+            "p.prefectureKana, c.cityKana, p.prefectureCode) " +
+            "FROM TblCityEntity c " +
+            "INNER JOIN c.tblPrefectureEntity p " +
+            "WHERE p.prefectureCode = ?1")
+    List<CityByPrefecture> searchByPrefectureCode(String prefectureCode);
 }

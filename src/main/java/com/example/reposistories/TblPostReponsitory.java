@@ -10,11 +10,14 @@
  */
 package com.example.reposistories;
 
+import com.example.bean.AddressByPostCode;
 import com.example.entities.TblPostEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * Repository interface for tbl_post
@@ -35,7 +38,10 @@ public interface TblPostReponsitory extends JpaRepository<TblPostEntity, Long> {
      */
     @Modifying
     @Query(value = "UPDATE tbl_post " +
-            "SET post_code = ?1, update_show = ?2, change_reason = ?3, multi_area = ?4 " +
+            "SET post_code = ?1, " +
+            "update_show = ?2, " +
+            "hange_reason = ?3, " +
+            "multi_area = ?4 " +
             "WHERE post_id = ?5", nativeQuery = true)
     void updateTblPost(String postCode, long updateShow, long changeReason, long multiArea, long postId);
 
@@ -50,8 +56,11 @@ public interface TblPostReponsitory extends JpaRepository<TblPostEntity, Long> {
      */
     @Modifying
     @Query(value = "INSERT tbl_post " +
-            "SET post_code = ?1, update_show = ?2, change_reason = ?3, multi_area = ?4 ", nativeQuery = true)
-    void addTblPost(String postCode, long updateShow, long changeReason, long multiArea);
+            "SET post_code = ?1, " +
+            "update_show = ?2, " +
+            "change_reason = ?3, " +
+            "multi_area = ?4 ", nativeQuery = true)
+    void insertTblPost(String postCode, long updateShow, long changeReason, long multiArea);
 
     /**
      * delete data
@@ -61,4 +70,32 @@ public interface TblPostReponsitory extends JpaRepository<TblPostEntity, Long> {
     @Modifying
     @Query(value = "DELETE FROM tbl_post WHERE post_id = ?1", nativeQuery = true)
     void deleteTblPost(long postId);
+
+    /**
+     * Get post_code by postId for checking existed data
+     *
+     * @param postId
+     * @return String
+     */
+    @Query(value = "SELECT post_code " +
+            "FROM tbl_post " +
+            "WHERE post_id = ?1", nativeQuery = true)
+    String getPostCodeById(int postId);
+
+    /**
+     * Search data by postCode
+     *
+     * @param postCode
+     * @return List<AddressByPostCode>
+     */
+    @Query("SELECT new com.example.bean.AddressByPostCode(c.code, p.prefecture, c.city, " +
+            "a.area, old.oldPostCode, post.postCode, p.prefectureKana, c.cityKana, a.areaKana, post.multiArea, " +
+            "a.koazaArea, a.chomeArea, a.multiPostArea, post.updateShow, post.changeReason, p.prefectureCode) " +
+            "FROM TblCityEntity c " +
+            "INNER JOIN c.tblPrefectureEntity p " +
+            "INNER JOIN c.tblAreaEntityList a " +
+            "INNER JOIN a.tblOldPostEntity old " +
+            "INNER JOIN a.tblPostEntity post " +
+            "WHERE post.postCode = ?1")
+    List<AddressByPostCode> searchByPostCode(String postCode);
 }
