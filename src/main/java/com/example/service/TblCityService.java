@@ -15,7 +15,6 @@ import com.example.exception.BadRequest;
 import com.example.exception.NotFound;
 import com.example.reposistories.TblCityReponsitory;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +41,7 @@ public class TblCityService {
         String city = jsonData.get("city").toString();
         int prefectureId = Integer.parseInt(jsonData.get("prefecture_id").toString());
         if (!Common.validateSTring(city, cityKana)) {
-            throw new BadRequest("Validate Not Passed");
+            throw new BadRequest("Fail validate");
         }
         tblCityReponsitory.insertTblCity(code, cityKana, city, prefectureId);
     }
@@ -51,10 +50,10 @@ public class TblCityService {
      * Service for edit new data to tbl_city
      *
      * @param jsonData
-     * @param cityId
      */
     @Transactional(rollbackFor = Exception.class)
-    public void updateTblCity(JSONObject jsonData, int cityId) {
+    public void updateTblCity(JSONObject jsonData) {
+        int cityId = Integer.parseInt(jsonData.get("city_id").toString());
         if (tblCityReponsitory.getCodeById(cityId) == null) {
             throw new NotFound("Update a tbl_city Record That Not Existed");
         }
@@ -63,7 +62,7 @@ public class TblCityService {
         String city = jsonData.get("city").toString();
         int prefectureId = Integer.parseInt(jsonData.get("prefecture_id").toString());
         if (!Common.validateSTring(city, cityKana)) {
-            throw new BadRequest("Validate Not Passed");
+            throw new BadRequest("Fail validate");
         }
         tblCityReponsitory.updateTblCity(code, cityKana, city, prefectureId, cityId);
     }
@@ -71,10 +70,11 @@ public class TblCityService {
     /**
      * Delete data from tbl_city
      *
-     * @param cityId
+     * @param jsonData
      */
     @Transactional(rollbackFor = Exception.class)
-    public void deleteTblCity(int cityId) {
+    public void deleteTblCity(JSONObject jsonData) {
+        int cityId = Integer.parseInt(jsonData.get("city_id").toString());
         if (tblCityReponsitory.getCodeById(cityId) == null) {
             throw new NotFound("Delete a tbl_city Record That Not Existed");
         }

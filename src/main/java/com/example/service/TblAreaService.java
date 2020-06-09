@@ -15,7 +15,6 @@ import com.example.exception.BadRequest;
 import com.example.exception.NotFound;
 import com.example.reposistories.TblAreaReponsitory;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -48,10 +47,10 @@ public class TblAreaService {
         int postId = Integer.parseInt(jsonData.get("post_id").toString());
         int oldPostId = Integer.parseInt(jsonData.get("old_post_id").toString());
         if (!Common.validateSTring(area, areaKana)) {
-            throw new BadRequest("Validate Not Passed");
+            throw new BadRequest("Fail validate");
         }
         if (checkExist(areaKana, area, cityId, chomeArea, koazaArea, multiPostArea, postId, oldPostId) != null) {
-            throw new DuplicateKeyException("Data is Existed");
+            throw new DuplicateKeyException("exist record");
         }
         areaReponsitory.insertTblArea(areaKana, area, cityId, chomeArea, koazaArea, multiPostArea, postId,
                 oldPostId);
@@ -61,10 +60,10 @@ public class TblAreaService {
      * Service for edit new data into tbl_area
      *
      * @param jsonData
-     * @param areaId
      */
     @Transactional(rollbackFor = Exception.class)
-    public void updateTblArea(JSONObject jsonData, int areaId) {
+    public void updateTblArea(JSONObject jsonData) {
+        int areaId = Integer.parseInt(jsonData.get("area_id").toString());
         if (areaReponsitory.getAreaKanaById(areaId) == null) {
             throw new NotFound("Update a tbl_area Record That Not Existed");
         }
@@ -77,10 +76,10 @@ public class TblAreaService {
         int postId = Integer.parseInt(jsonData.get("post_id").toString());
         int oldPostId = Integer.parseInt(jsonData.get("old_post_id").toString());
         if (!Common.validateSTring(area, areaKana)) {
-            throw new BadRequest("Validate Not Passed");
+            throw new BadRequest("Fail validate");
         }
         if (checkExist(areaKana, area, cityId, chomeArea, koazaArea, multiPostArea, postId, oldPostId) != null) {
-            throw new DuplicateKeyException("Data is Existed");
+            throw new DuplicateKeyException("exist record");
         }
         areaReponsitory.updateTblArea(areaKana, area, cityId, chomeArea, koazaArea, multiPostArea, postId,
                 oldPostId, areaId);
@@ -89,10 +88,11 @@ public class TblAreaService {
     /**
      * Delete data from tbl_area
      *
-     * @param areaId
+     * @param jsonData
      */
     @Transactional(rollbackFor = Exception.class)
-    public void deleteTblArea(int areaId) {
+    public void deleteTblArea(JSONObject jsonData) {
+        int areaId = Integer.parseInt(jsonData.get("area_id").toString());
         if (areaReponsitory.getAreaKanaById(areaId) == null) {
             throw new NotFound("Delete a tbl_area Record That Not Existed");
         }
@@ -104,7 +104,6 @@ public class TblAreaService {
      *
      * @param areaKana
      * @param area
-     * @param cityId
      * @param chomeArea
      * @param koazaArea
      * @param multiPostArea

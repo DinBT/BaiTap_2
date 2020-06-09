@@ -8,7 +8,7 @@
  * is strictly forbidden unless prior written permission is obtained
  * from Classmethod, Inc.
  */
-package com.example.ServiceTest;
+package com.example.servicetest;
 
 import com.example.bean.CityByPrefecture;
 import com.example.reposistories.TblPrefectureReponsitory;

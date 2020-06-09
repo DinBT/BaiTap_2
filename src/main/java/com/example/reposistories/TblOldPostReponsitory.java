@@ -43,8 +43,8 @@ public interface TblOldPostReponsitory extends JpaRepository<TblOldPostEntity, L
      * @param oldPostCode : data of old_post_code column
      */
     @Modifying
-    @Query(value = "INSERT tbl_old_post " +
-            "SET old_post_code = ?1 ", nativeQuery = true)
+    @Query(value = "INSERT INTO tbl_old_post(old_post_code) " +
+            "VALUE (?1) ", nativeQuery = true)
     void insertTblOldPost(String oldPostCode);
 
 

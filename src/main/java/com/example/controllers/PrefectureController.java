@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,10 +47,10 @@ public class PrefectureController {
      * @param jsonData
      * @return ResponseEntity<SuccessResult>
      */
-    @RequestMapping(value = "/add/{jsonData}", method = RequestMethod.GET)
-    public ResponseEntity<SuccessResult> insertTblArea(@PathVariable(value = "jsonData") JSONObject jsonData) {
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public ResponseEntity<SuccessResult> insertTblArea(@RequestBody JSONObject jsonData) {
         prefectureService.insertTblPrefecture(jsonData);
-        return new ResponseEntity<>(new SuccessResult("200", "record added successfully"), HttpStatus.OK);
+        return new ResponseEntity<>(new SuccessResult("200", "add record successfully"), HttpStatus.OK);
     }
 
     /**
@@ -58,23 +59,22 @@ public class PrefectureController {
      * @param jsonData
      * @return ResponseEntity<SuccessResult>
      */
-    @RequestMapping(value = "/edit/{id}/{jsonData}", method = RequestMethod.GET)
-    public ResponseEntity<SuccessResult> updateTblArea(@PathVariable(value = "jsonData") JSONObject jsonData,
-                                                       @PathVariable(value = "id") int id) {
-        prefectureService.updateTblPrefecture(jsonData, id);
-        return new ResponseEntity<>(new SuccessResult("200", "record updated successfully"), HttpStatus.OK);
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public ResponseEntity<SuccessResult> updateTblArea(@RequestBody JSONObject jsonData) {
+        prefectureService.updateTblPrefecture(jsonData);
+        return new ResponseEntity<>(new SuccessResult("200", "edit record successfully"), HttpStatus.OK);
     }
 
     /**
      * Delete data from tbl_area
      *
-     * @param id
+     * @param jsonData
      * @return ResponseEntity<SuccessResult>
      */
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public ResponseEntity<SuccessResult> updateTblArea(@PathVariable(value = "id") int id) {
-        prefectureService.deleteTblPrefecture(id);
-        return new ResponseEntity<>(new SuccessResult("200", "record deleted successfully"), HttpStatus.OK);
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public ResponseEntity<SuccessResult> deletePrefecture(@RequestBody JSONObject jsonData) {
+        prefectureService.deleteTblPrefecture(jsonData);
+        return new ResponseEntity<>(new SuccessResult("200", "deleted record successfully"), HttpStatus.OK);
     }
 
     /**

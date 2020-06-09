@@ -1,4 +1,4 @@
-package com.example.ServiceTest;
+package com.example.servicetest;
 
 import com.example.reposistories.TblPostReponsitory;
 import org.junit.Before;

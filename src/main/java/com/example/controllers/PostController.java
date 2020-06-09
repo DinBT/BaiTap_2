@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,10 +48,10 @@ public class PostController {
      * @param jsonData
      * @return ResponseEntity<SuccessResult>
      */
-    @RequestMapping(value = "/add/{jsonData}", method = RequestMethod.GET)
-    public ResponseEntity<SuccessResult> insertTblPost(@PathVariable(value = "jsonData") JSONObject jsonData) {
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public ResponseEntity<SuccessResult> insertTblPost(@RequestBody JSONObject jsonData) {
         postService.insertTblPost(jsonData);
-        return new ResponseEntity<>(new SuccessResult("200", "record added successfully"), HttpStatus.OK);
+        return new ResponseEntity<>(new SuccessResult("200", "add record successfully"), HttpStatus.OK);
     }
 
     /**
@@ -59,23 +60,22 @@ public class PostController {
      * @param jsonData
      * @return ResponseEntity<SuccessResult>
      */
-    @RequestMapping(value = "/edit/{id}/{jsonData}", method = RequestMethod.GET)
-    public ResponseEntity<SuccessResult> updateTblPost(@PathVariable(value = "jsonData") JSONObject jsonData,
-                                                    @PathVariable(value = "id") int id) {
-        postService.updateTblPost(jsonData, id);
-        return new ResponseEntity<>(new SuccessResult("200", "record edited successfully"), HttpStatus.OK);
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public ResponseEntity<SuccessResult> updateTblPost(@RequestBody JSONObject jsonData) {
+        postService.updateTblPost(jsonData);
+        return new ResponseEntity<>(new SuccessResult("200", "edit record successfully"), HttpStatus.OK);
     }
 
     /**
      * Delete data from tbl_post
      *
-     * @param id
+     * @param jsonData
      * @return ResponseEntity<SuccessResult>
      */
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public ResponseEntity<SuccessResult> deleteTblPost(@PathVariable(value = "id") int id) {
-        postService.deleteTblPost(id);
-        return new ResponseEntity<>(new SuccessResult("200", "record deleted successfully"), HttpStatus.OK);
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public ResponseEntity<SuccessResult> deleteTblPost(@RequestBody JSONObject jsonData) {
+        postService.deleteTblPost(jsonData);
+        return new ResponseEntity<>(new SuccessResult("200", "delete record successfully"), HttpStatus.OK);
     }
 
 

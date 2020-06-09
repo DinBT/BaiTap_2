@@ -48,7 +48,7 @@ public class TblPostService {
         int changeReason = Integer.parseInt(jsonData.get("change_reason").toString());
         int multiArea = Integer.parseInt(jsonData.get("multi_area").toString());
         if (!postCode.matches(Common.POST_CODE)) {
-            throw new BadRequest("Validate Not Passed");
+            throw new BadRequest("Fail validate");
         }
         postReponsitory.insertTblPost(postCode, updateShow, changeReason, multiArea);
     }
@@ -57,10 +57,10 @@ public class TblPostService {
      * Service for edit new data into tbl_post
      *
      * @param jsonData
-     * @param postId
      */
     @Transactional(rollbackFor = Exception.class)
-    public void updateTblPost(JSONObject jsonData, int postId) {
+    public void updateTblPost(JSONObject jsonData) {
+        int postId = Integer.parseInt(jsonData.get("post_id").toString());
         if (postReponsitory.getPostCodeById(postId) == null) {
             throw new NotFound("Update a tbl_post Record That Not Existed");
         }
@@ -69,7 +69,7 @@ public class TblPostService {
         int changeReason = Integer.parseInt(jsonData.get("change_reason").toString());
         int multiArea = Integer.parseInt(jsonData.get("multi_area").toString());
         if (!postCode.matches(Common.POST_CODE)) {
-            throw new BadRequest("Validate Not Passed");
+            throw new BadRequest("Fail validate");
         }
         postReponsitory.updateTblPost(postCode, updateShow, changeReason, multiArea, postId);
     }
@@ -77,10 +77,11 @@ public class TblPostService {
     /**
      * Service for deleting data from tbl_post
      *
-     * @param postId
+     * @param jsonData
      */
     @Transactional(rollbackFor = Exception.class)
-    public void deleteTblPost(int postId) {
+    public void deleteTblPost(JSONObject jsonData) {
+        int postId = Integer.parseInt(jsonData.get("post_id").toString());
         if (postReponsitory.getPostCodeById(postId) == null) {
             throw new NotFound("Delete a tbl_post Record That Not Existed");
         }

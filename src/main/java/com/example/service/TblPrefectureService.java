@@ -11,15 +11,12 @@
 package com.example.service;
 
 import com.example.bean.CityByPrefecture;
-import com.example.bean.ErrorResult;
 import com.example.common.Common;
 import com.example.exception.BadRequest;
 import com.example.exception.NotFound;
 import com.example.reposistories.TblPrefectureReponsitory;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,7 +43,7 @@ public class TblPrefectureService {
         String prefectureKana = jsonData.get("prefecture_kana").toString();
         String prefectureCode = jsonData.get("prefecture_code").toString();
         if (!Common.validateSTring(prefecture, prefectureKana)) {
-            throw new BadRequest("Validate Not Passed");
+            throw new BadRequest("Fail validate");
         }
         prefectureReponsitory.insertTblPrefecture(prefectureKana, prefecture, prefectureCode);
     }
@@ -55,10 +52,10 @@ public class TblPrefectureService {
      * Service for edit new data into tbl_prefecture
      *
      * @param jsonData
-     * @param prefectureId
      */
     @Transactional(rollbackFor = Exception.class)
-    public void updateTblPrefecture(JSONObject jsonData, int prefectureId) {
+    public void updateTblPrefecture(JSONObject jsonData) {
+        int prefectureId = Integer.parseInt(jsonData.get("prefecture_id").toString());
         if (prefectureReponsitory.getPrefectureKanaById(prefectureId) == null) {
             throw new NotFound("Update a tbl_prefecture Record That Not Existed");
         }
@@ -66,7 +63,7 @@ public class TblPrefectureService {
         String prefectureKana = jsonData.get("prefecture_kana").toString();
         String prefectureCode = jsonData.get("prefecture_code").toString();
         if (!Common.validateSTring(prefecture, prefectureKana)) {
-            throw new BadRequest("Validate Not Passed");
+            throw new BadRequest("Fail validate");
         }
         prefectureReponsitory.updateTblPrefecture(prefecture, prefectureKana, prefectureCode, prefectureId);
     }
@@ -74,10 +71,11 @@ public class TblPrefectureService {
     /**
      * Service for deleting data from tbl_prefecture
      *
-     * @param prefectureId
+     * @param jsonData
      */
     @Transactional(rollbackFor = Exception.class)
-    public void deleteTblPrefecture(int prefectureId) {
+    public void deleteTblPrefecture(JSONObject jsonData) {
+        int prefectureId = Integer.parseInt(jsonData.get("prefecture_id").toString());
         if (prefectureReponsitory.getPrefectureKanaById(prefectureId) == null) {
             throw new NotFound("Delete a tbl_prefecture Record That Not Existed");
         }

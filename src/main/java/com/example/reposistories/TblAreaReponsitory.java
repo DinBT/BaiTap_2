@@ -63,15 +63,8 @@ public interface TblAreaReponsitory extends JpaRepository<TblAreaEntity, Long> {
      * @param oldPostId     : data of old_post_id column
      */
     @Modifying
-    @Query(value = "INSERT tbl_area " +
-            "SET area_kana = ?1, " +
-            "area = ?2, " +
-            "city_id = ?3, " +
-            "chome_area = ?4, " +
-            "koaza_area = ?5, " +
-            "multi_post_area = ?6, " +
-            "post_id = ?7, " +
-            "old_post_id = ?8 ", nativeQuery = true)
+    @Query(value = "INSERT INTO tbl_area(area_kana, area, city_id, chome_area, koaza_area, multi_post_area, post_id, old_post_id) " +
+            "VALUES(?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)", nativeQuery = true)
     void insertTblArea(String areaKana, String area, long cityId, long chomeArea, long koazaArea, long multiPostArea, long postId, long oldPostId);
 
     /**

@@ -13,7 +13,6 @@ package com.example.service;
 import com.example.exception.NotFound;
 import com.example.reposistories.TblOldPostReponsitory;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,10 +42,11 @@ public class TblOldPostService {
      * Service for edit new data into tbl_old_post
      *
      * @param jsonData
-     * @param oldPostId
      */
     @Transactional(rollbackFor = Exception.class)
-    public void updateTblOldPost(JSONObject jsonData, int oldPostId) {
+    public void updateTblOldPost(JSONObject jsonData) {
+        int oldPostId = Integer.parseInt(jsonData.get("old_post_id").toString());
+
         if (oldPostReponsitory.getOldPostCodeById(oldPostId) == null) {
             throw new NotFound("edit a tbl_old_post Record That Not Existed");
         }
@@ -57,14 +57,14 @@ public class TblOldPostService {
     /**
      * Service for deleting data from tbl_old_post
      *
-     * @param oldPostId
+     * @param jsonData
      */
     @Transactional(rollbackFor = Exception.class)
-    public void deleteTblOldPost(int oldPostId) {
+    public void deleteTblOldPost(JSONObject jsonData) {
+        int oldPostId = Integer.parseInt(jsonData.get("old_post_id").toString());
         if (oldPostReponsitory.getOldPostCodeById(oldPostId) == null) {
             throw new NotFound("Delete a tbl_old_post Record That Not Existed");
         }
         oldPostReponsitory.deleteTblOldPost(oldPostId);
     }
-
 }

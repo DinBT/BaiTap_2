@@ -8,7 +8,7 @@
  * is strictly forbidden unless prior written permission is obtained
  * from Classmethod, Inc.
  */
-package com.example.ControllersTest;
+package com.example.controllerstest;
 
 import com.example.bean.CityByPrefecture;
 import com.example.controllers.PrefectureController;
