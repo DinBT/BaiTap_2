@@ -16,7 +16,6 @@ import com.example.exception.NotFound;
 import com.example.reposistories.TblAreaReponsitory;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,9 +48,6 @@ public class TblAreaService {
         if (!Common.validateSTring(area, areaKana)) {
             throw new BadRequest("Fail validate");
         }
-        if (checkExist(areaKana, area, cityId, chomeArea, koazaArea, multiPostArea, postId, oldPostId) != null) {
-            throw new DuplicateKeyException("exist record");
-        }
         areaReponsitory.insertTblArea(areaKana, area, cityId, chomeArea, koazaArea, multiPostArea, postId,
                 oldPostId);
     }
@@ -78,9 +74,6 @@ public class TblAreaService {
         if (!Common.validateSTring(area, areaKana)) {
             throw new BadRequest("Fail validate");
         }
-        if (checkExist(areaKana, area, cityId, chomeArea, koazaArea, multiPostArea, postId, oldPostId) != null) {
-            throw new DuplicateKeyException("exist record");
-        }
         areaReponsitory.updateTblArea(areaKana, area, cityId, chomeArea, koazaArea, multiPostArea, postId,
                 oldPostId, areaId);
     }
@@ -98,23 +91,4 @@ public class TblAreaService {
         }
         areaReponsitory.deleteFromTblArea(areaId);
     }
-
-    /**
-     * Check if tbl_area data is existed
-     *
-     * @param areaKana
-     * @param area
-     * @param chomeArea
-     * @param koazaArea
-     * @param multiPostArea
-     * @param postId
-     * @param oldPostId
-     * @return null : if data is not existed
-     */
-    private Integer checkExist(String areaKana, String area, int cityId, int chomeArea, int koazaArea,
-                               int multiPostArea, int postId, int oldPostId) {
-        return areaReponsitory.getAreaById(areaKana, area, cityId, chomeArea, koazaArea, multiPostArea,
-                postId, oldPostId);
-    }
-
 }

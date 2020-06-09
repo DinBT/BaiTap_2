@@ -25,7 +25,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +37,8 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author DinBT
  */
+@TestPropertySource("/application-test.properties")
+@Rollback
 @ActiveProfiles("test")
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -62,7 +66,7 @@ public class TblPostReponsitoryTest {
         String code = "01101";
         int koazaArea = 0;
         int multiArea = 0;
-        int multiPostArea = 0;
+        int multiPostArea = 1;
         String oldPostCode = "060";
         String postCode = "9-99-99";
         String prefecture = "静岡県";
@@ -87,8 +91,8 @@ public class TblPostReponsitoryTest {
         assertThat(addressByPostCode.getChangeReason(), is(changeReason));
         assertThat(addressByPostCode.getPrefectureCode(), is(prefectureCode));
         // No Record Found
-        List<AddressByPostCode> postDtoEmpty = tblPostReponsitory.searchByPostCode("1-11-11");
-        assertTrue(postDtoEmpty.isEmpty());
+        List<AddressByPostCode> noAddress = tblPostReponsitory.searchByPostCode("1-11-11");
+        assertTrue(noAddress.isEmpty());
     }
 
     /**
@@ -97,7 +101,7 @@ public class TblPostReponsitoryTest {
     @Test
     @Transactional
     @FlywayTest(locationsForMigrate = "db/migration")
-    public void deleteFromTblPost() {
+    public void deleteTblPost() {
         tblPostReponsitory.deleteTblPost(2);
         String postCode = tblPostReponsitory.getPostCodeById(2);
         assertNull(postCode);
@@ -110,9 +114,9 @@ public class TblPostReponsitoryTest {
     @Transactional
     @FlywayTest(locationsForMigrate = "db/migration")
     public void insertTblPost() {
-        tblPostReponsitory.insertTblPost("7-77-77", 0, 0, 0);
+        tblPostReponsitory.insertTblPost("736", 0, 0, 0);
         String postCode = tblPostReponsitory.getPostCodeById(3);
-        assertThat(postCode, is("7-77-77"));
+        assertThat(postCode, is("736"));
     }
 
     /**
@@ -132,7 +136,7 @@ public class TblPostReponsitoryTest {
      */
     @Test
     @FlywayTest(locationsForMigrate = "db/migration")
-    public void getPostCodeByPostId() {
+    public void getPostCodeById() {
         String postCode = tblPostReponsitory.getPostCodeById(1);
         assertThat(postCode, is("9-99-99"));
     }
@@ -143,7 +147,7 @@ public class TblPostReponsitoryTest {
     @Test(expected = DataIntegrityViolationException.class)
     @Transactional
     @FlywayTest(locationsForMigrate = "db/migration")
-    public void testValidate() {
+    public void testIntegrityViolation() {
         tblPostReponsitory.insertTblPost("7-77-77", 0, 0, 0);
         tblPostReponsitory.insertTblPost("7-77-77", 0, 0, 0);
     }

@@ -42,7 +42,7 @@ public class TblAreaReponsitoryTest {
      */
     @Test
     @FlywayTest(locationsForMigrate = "db/migration")
-    public void getAreaKanaByAreaId() {
+    public void getAreaKanaById() {
         String areaKana = tblAreaReponsitory.getAreaKanaById(1);
         assertThat(areaKana, is("ｲｲﾀﾞ"));
     }
@@ -54,9 +54,9 @@ public class TblAreaReponsitoryTest {
     @Transactional
     @FlywayTest(locationsForMigrate = "db/migration")
     public void insertTblArea() {
-        tblAreaReponsitory.insertTblArea("ｲｲﾀﾞ", "飯田", 1, 0, 0, 1, 1, 1);
-        String areaKana = tblAreaReponsitory.getAreaKanaById(1);
-        assertThat(areaKana, is("ｲｲﾀﾞ"));
+        tblAreaReponsitory.insertTblArea("ｲｲｲﾀｲｲﾀｲﾞ", "飯田田田", 1, 0, 0, 1, 1, 1);
+        String areaKana = tblAreaReponsitory.getAreaKanaById(2);
+        assertThat(areaKana, is("ｲｲｲﾀｲｲﾀｲﾞ"));
     }
 
     /**

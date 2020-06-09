@@ -91,7 +91,7 @@ public class TblCityReponsitoryTest {
     @Test(expected = DataIntegrityViolationException.class)
     @Transactional
     @FlywayTest(locationsForMigrate = "db/migration")
-    public void testValidate() {
+    public void testIntegrityViolation() {
         tblCityReponsitory.insertTblCity("01101", "ｼｭｳﾁｸﾞﾝﾓﾘﾏﾁ", "周智郡森町", 1);
         tblCityReponsitory.insertTblCity("01101", "ｼｭｳﾁｸﾞﾝﾓﾘﾏﾁ", "周智郡森町", 1);
     }

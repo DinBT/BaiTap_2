@@ -87,7 +87,7 @@
       */
      @Test
      @FlywayTest(locationsForMigrate = "db/migration")
-     public void getPrefectureKanaByPrefectureId() {
+     public void getPrefectureKanaById() {
          String prefectureKana = tblRefectureReponsitory.getPrefectureKanaById(1);
          assertThat(prefectureKana, is("ｼｽﾞｵｶｹﾝ"));
      }
@@ -110,7 +110,7 @@
      @Test
      @Transactional
      @FlywayTest(locationsForMigrate = "db/migration")
-     public void deleteFromTblPrefecture() {
+     public void deleteTblPrefecture() {
          tblRefectureReponsitory.deleteTblPrefecture(2);
          String prefectureKana = tblRefectureReponsitory.getPrefectureKanaById(2);
          assertNull(prefectureKana);
@@ -122,7 +122,7 @@
      @Test(expected = DataIntegrityViolationException.class)
      @Transactional
      @FlywayTest(locationsForMigrate = "db/migration")
-     public void testValidate() {
+     public void testIntegrityViolation() {
          tblRefectureReponsitory.insertTblPrefecture("ﾎｯｶｲﾄﾞｳ", "北海道", "02");
          tblRefectureReponsitory.insertTblPrefecture("ﾎｯｶｲﾄﾞｳ", "北海道", "02");
      }

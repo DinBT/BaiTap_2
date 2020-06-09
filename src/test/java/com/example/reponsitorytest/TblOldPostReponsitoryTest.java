@@ -45,7 +45,7 @@ public class TblOldPostReponsitoryTest {
      */
     @Test
     @FlywayTest(locationsForMigrate = "db/migration")
-    public void getOldPostCodeByOldPostId() {
+    public void getOldPostCodeById() {
         // Record Found
         String oldPostCode = tblOldPostReponsitory.getOldPostCodeById(1);
         assertThat(oldPostCode, is("060"));
@@ -61,9 +61,9 @@ public class TblOldPostReponsitoryTest {
     @Transactional
     @FlywayTest(locationsForMigrate = "db/migration")
     public void insertTblOldPost() {
-        tblOldPostReponsitory.insertTblOldPost("174");
+        tblOldPostReponsitory.insertTblOldPost("933");
         String oldPostCode = tblOldPostReponsitory.getOldPostCodeById(2);
-        assertThat(oldPostCode, is("174"));
+        assertThat(oldPostCode, is("933"));
     }
 
     /**
@@ -95,7 +95,7 @@ public class TblOldPostReponsitoryTest {
     @Test(expected = DataIntegrityViolationException.class)
     @Transactional
     @FlywayTest(locationsForMigrate = "db/migration")
-    public void testValidate() {
+    public void testIntegrityViolation() {
         tblOldPostReponsitory.insertTblOldPost("174");
         tblOldPostReponsitory.insertTblOldPost("174");
     }
