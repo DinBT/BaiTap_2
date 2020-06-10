@@ -76,7 +76,6 @@ public interface TblAreaReponsitory extends JpaRepository<TblAreaEntity, Long> {
     @Query(value = "DELETE FROM tbl_area WHERE area_id = ?1", nativeQuery = true)
     void deleteFromTblArea(long areaId);
 
-
     /**
      * Select area_id for checking existed data when inserting new data
      *

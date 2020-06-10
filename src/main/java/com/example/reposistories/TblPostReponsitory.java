@@ -40,7 +40,7 @@ public interface TblPostReponsitory extends JpaRepository<TblPostEntity, Long> {
     @Query(value = "UPDATE tbl_post " +
             "SET post_code = ?1, " +
             "update_show = ?2, " +
-            "hange_reason = ?3, " +
+            "change_reason = ?3, " +
             "multi_area = ?4 " +
             "WHERE post_id = ?5", nativeQuery = true)
     void updateTblPost(String postCode, long updateShow, long changeReason, long multiArea, long postId);
@@ -55,11 +55,8 @@ public interface TblPostReponsitory extends JpaRepository<TblPostEntity, Long> {
      * @param multiArea    : data of multi_area column
      */
     @Modifying
-    @Query(value = "INSERT tbl_post " +
-            "SET post_code = ?1, " +
-            "update_show = ?2, " +
-            "change_reason = ?3, " +
-            "multi_area = ?4 ", nativeQuery = true)
+    @Query(value = "INSERT INTO tbl_post(post_code , update_show, change_reason, multi_area) " +
+            "VALUE (?1, ?2, ?3, ?4)", nativeQuery = true)
     void insertTblPost(String postCode, long updateShow, long changeReason, long multiArea);
 
     /**
