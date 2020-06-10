@@ -85,6 +85,35 @@ public interface TblAreaReponsitory extends JpaRepository<TblAreaEntity, Long> {
     @Query(value = "DELETE FROM tbl_area WHERE area_id = ?1", nativeQuery = true)
     void deleteFromTblArea(long areaId);
 
+<<<<<<< HEAD
+=======
+    /**
+     * Select area_id for checking existed data when inserting new data
+     *
+     * @param areaKana      : data of area_kana column
+     * @param area          : data of area column
+     * @param cityId        : data of city_id column
+     * @param chomeArea     : data of chome_area column
+     * @param koazaArea     : data of koaza_area column
+     * @param multiPostArea : data of multi_post_area column
+     * @param postId        : data of post_id column
+     * @param oldPostId     : data of old_post_id column
+     * @return Integer : area_id
+     */
+    @Query(value = "SELECT area_id " +
+            "FROM tbl_area " +
+            "WHERE area_kana = ?1 " +
+            "AND area = ?2 " +
+            "AND city_id = ?3 " +
+            "AND chome_area = ?4 " +
+            "AND koaza_area = ?5 " +
+            "AND multi_post_area = ?6 " +
+            "AND post_id = ?7 " +
+            "AND old_post_id = ?8", nativeQuery = true)
+    Integer getAreaById(String areaKana, String area, int cityId, int chomeArea, int koazaArea,
+                        int multiPostArea, int postId, int oldPostId);
+
+>>>>>>> 6bc5a387796c9234ae2a9e4fdb3de55cd867662d
     /**
      * Get area_kana by area_id
      *
