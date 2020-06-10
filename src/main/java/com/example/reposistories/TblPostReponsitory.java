@@ -56,18 +56,12 @@ public interface TblPostReponsitory extends JpaRepository<TblPostEntity, Long> {
      * @param multiArea    : data of multi_area column
      */
     @Modifying
-<<<<<<< HEAD
     @Query(value = "INSERT INTO tbl_post(post_code, update_show, change_reason, multi_area) " +
             "VALUES(:postCode, :updateShow, :changeReason, :multiArea)", nativeQuery = true)
     void insertTblPost(@Param("postCode") String postCode,
                        @Param("updateShow") int updateShow,
                        @Param("changeReason") int changeReason,
                        @Param("multiArea") int multiArea);
-=======
-    @Query(value = "INSERT INTO tbl_post(post_code , update_show, change_reason, multi_area) " +
-            "VALUE (?1, ?2, ?3, ?4)", nativeQuery = true)
-    void insertTblPost(String postCode, long updateShow, long changeReason, long multiArea);
->>>>>>> 6bc5a387796c9234ae2a9e4fdb3de55cd867662d
 
     /**
      * delete data
