@@ -69,12 +69,12 @@ public interface TblAreaReponsitory extends JpaRepository<TblAreaEntity, Long> {
             nativeQuery = true)
     void insertTblArea(@Param("areaKana") String areaKana,
                        @Param("area") String area,
-                       @Param("cityId") int cityId,
+                       @Param("cityId") long cityId,
                        @Param("chomeArea") int chomeArea,
                        @Param("koazaArea") int koazaArea,
                        @Param("multiPostArea") int multiPostArea,
-                       @Param("postId") int postId,
-                       @Param("oldPostId") int oldPostId);
+                       @Param("postId") long postId,
+                       @Param("oldPostId") long oldPostId);
 
     /**
      * delete data
