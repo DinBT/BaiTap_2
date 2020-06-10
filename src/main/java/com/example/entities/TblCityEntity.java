@@ -59,29 +59,6 @@ public class TblCityEntity {
     @OneToMany(targetEntity = TblAreaEntity.class, mappedBy = "id", fetch = FetchType.LAZY)
     private List<TblAreaEntity> tblAreaEntityList;
 
-//    public TblCityEntity(String code, String cityKana, String city, long pr_id) {
-//        this.code = code;
-//        this.city = city;
-//        this.cityKana = cityKana;
-//        this.pr_id = pr_id;
-//    }
-//
-//    public TblCityEntity(long id, String code, String cityKana, String city, long pr_id) {
-//        this.id = id;
-//        this.code = code;
-//        this.city = city;
-//        this.cityKana = cityKana;
-//        this.pr_id = pr_id;
-//    }
-//
-//    public long getPr_id() {
-//        return pr_id;
-//    }
-//
-//    public void setPr_id(long pr_id) {
-//        this.pr_id = pr_id;
-//    }
-
     public long getId() {
         return id;
     }

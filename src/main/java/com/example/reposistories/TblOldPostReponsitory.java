@@ -14,6 +14,7 @@ import com.example.entities.TblOldPostEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -44,8 +45,8 @@ public interface TblOldPostReponsitory extends JpaRepository<TblOldPostEntity, L
      */
     @Modifying
     @Query(value = "INSERT INTO tbl_old_post(old_post_code) " +
-            "VALUE (?1) ", nativeQuery = true)
-    void insertTblOldPost(String oldPostCode);
+            "VALUES (:oldPostCode)", nativeQuery = true)
+    void insertTblOldPost(@Param("oldPostCode") String oldPostCode);
 
 
     /**
@@ -66,5 +67,5 @@ public interface TblOldPostReponsitory extends JpaRepository<TblOldPostEntity, L
     @Query(value = "SELECT old_post_code " +
             "FROM tbl_old_post " +
             "WHERE old_post_id = ?1", nativeQuery = true)
-    String getOldPostCodeById(int oldPostId);
+    String getOldPostCodeById(long oldPostId);
 }

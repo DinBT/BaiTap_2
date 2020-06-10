@@ -31,105 +31,112 @@ import org.hibernate.annotations.FetchMode;
 @Entity
 @Table(name = "tbl_area")
 public class TblAreaEntity {
-	
-	@Id
-	@Column(name = "area_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	
-	@Column(name = "area")
-	private String area;
-	
-	@Column(name = "area_kana")
-	private String areaKana;
-	
-	@Column(name = "multi_post_area")
-	private int multiPostArea;
-	
-	@Column(name = "koaza_area")
-	private int koazaArea;
-	
-	@Column(name = "chome_area")
-	private int chomeArea;
-	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "city_id", nullable = false)
-	@Fetch(FetchMode.JOIN)
-	private TblCityEntity tblCityEntity;
-	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "old_post_id", nullable = false)
-	@Fetch(FetchMode.JOIN)
-	private TblOldPostEntity tblOldPostEntity;
-	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "post_id", nullable = false)
-	@Fetch(FetchMode.JOIN)
-	private TblPostEntity tblPostEntity;
-	
-	
-	public String getArea() {
-		return area;
-	}
 
-	public void setArea(String area) {
-		this.area = area;
-	}
+    @Id
+    @Column(name = "area_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-	public String getAreaKana() {
-		return areaKana;
-	}
+    @Column(name = "area")
+    private String area;
 
-	public void setAreaKana(String areaKana) {
-		this.areaKana = areaKana;
-	}
+    @Column(name = "area_kana")
+    private String areaKana;
 
-	public int getMultiPostArea() {
-		return multiPostArea;
-	}
+    @Column(name = "multi_post_area")
+    private int multiPostArea;
 
-	public void setMultiPostArea(int multiPostArea) {
-		this.multiPostArea = multiPostArea;
-	}
+    @Column(name = "koaza_area")
+    private int koazaArea;
 
-	public int getKoazaArea() {
-		return koazaArea;
-	}
+    @Column(name = "chome_area")
+    private int chomeArea;
 
-	public void setKoazaArea(int koazaArea) {
-		this.koazaArea = koazaArea;
-	}
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "city_id", nullable = false)
+    @Fetch(FetchMode.JOIN)
+    private TblCityEntity tblCityEntity;
 
-	public int getChomeArea() {
-		return chomeArea;
-	}
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "old_post_id", nullable = false)
+    @Fetch(FetchMode.JOIN)
+    private TblOldPostEntity tblOldPostEntity;
 
-	public void setChomeArea(int chomeArea) {
-		this.chomeArea = chomeArea;
-	}
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "post_id", nullable = false)
+    @Fetch(FetchMode.JOIN)
+    private TblPostEntity tblPostEntity;
 
-	public TblCityEntity getTblCityEntity() {
-		return tblCityEntity;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public void setTblCityEntity(TblCityEntity tblCityEntity) {
-		this.tblCityEntity = tblCityEntity;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public TblOldPostEntity getTblOldPostEntity() {
-		return tblOldPostEntity;
-	}
+    public String getArea() {
+        return area;
+    }
 
-	public void setTblOldPostEntity(TblOldPostEntity tblOldPostEntity) {
-		this.tblOldPostEntity = tblOldPostEntity;
-	}
+    public void setArea(String area) {
+        this.area = area;
+    }
 
-	public TblPostEntity getTblPostEntity() {
-		return tblPostEntity;
-	}
+    public String getAreaKana() {
+        return areaKana;
+    }
 
-	public void setTblPostEntity(TblPostEntity tblPostEntity) {
-		this.tblPostEntity = tblPostEntity;
-	}
+    public void setAreaKana(String areaKana) {
+        this.areaKana = areaKana;
+    }
+
+    public int getMultiPostArea() {
+        return multiPostArea;
+    }
+
+    public void setMultiPostArea(int multiPostArea) {
+        this.multiPostArea = multiPostArea;
+    }
+
+    public int getKoazaArea() {
+        return koazaArea;
+    }
+
+    public void setKoazaArea(int koazaArea) {
+        this.koazaArea = koazaArea;
+    }
+
+    public int getChomeArea() {
+        return chomeArea;
+    }
+
+    public void setChomeArea(int chomeArea) {
+        this.chomeArea = chomeArea;
+    }
+
+    public TblCityEntity getTblCityEntity() {
+        return tblCityEntity;
+    }
+
+    public void setTblCityEntity(TblCityEntity tblCityEntity) {
+        this.tblCityEntity = tblCityEntity;
+    }
+
+    public TblOldPostEntity getTblOldPostEntity() {
+        return tblOldPostEntity;
+    }
+
+    public void setTblOldPostEntity(TblOldPostEntity tblOldPostEntity) {
+        this.tblOldPostEntity = tblOldPostEntity;
+    }
+
+    public TblPostEntity getTblPostEntity() {
+        return tblPostEntity;
+    }
+
+    public void setTblPostEntity(TblPostEntity tblPostEntity) {
+        this.tblPostEntity = tblPostEntity;
+    }
 
 }
