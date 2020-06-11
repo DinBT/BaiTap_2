@@ -13,6 +13,7 @@ package com.example.controllers;
 import com.example.bean.AddressByPostCode;
 import com.example.bean.AddressResult;
 import com.example.bean.SuccessResult;
+import com.example.entities.TblPostEntity;
 import com.example.exception.BadRequest;
 import com.example.exception.NotFound;
 import com.example.service.TblAreaService;
@@ -41,43 +42,41 @@ public class PostController {
     @Autowired
     private TblPostService postService;
 
-
     /**
      * Insert new data to tbl_post
      *
-     * @param jsonData
-     * @return ResponseEntity<SuccessResult>
+     * @param jsonData data about TblPostEntity want add
+     * @return ResponseEntity<TblPostEntity>
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseEntity<SuccessResult> insertTblPost(@RequestBody JSONObject jsonData) {
-        postService.insertTblPost(jsonData);
-        return new ResponseEntity<>(new SuccessResult("200", "add record successfully"), HttpStatus.OK);
+    public ResponseEntity<TblPostEntity> insert(@RequestBody JSONObject jsonData) {
+        TblPostEntity tblPostEntity = postService.saveTblPost(jsonData);
+        return new ResponseEntity<>(tblPostEntity, HttpStatus.OK);
     }
 
     /**
      * edit new data to tbl_post
      *
-     * @param jsonData
-     * @return ResponseEntity<SuccessResult>
+     * @param jsonData data about TblPostEntity want edit
+     * @return ResponseEntity<TblPostEntity>
      */
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public ResponseEntity<SuccessResult> updateTblPost(@RequestBody JSONObject jsonData) {
-        postService.updateTblPost(jsonData);
-        return new ResponseEntity<>(new SuccessResult("200", "edit record successfully"), HttpStatus.OK);
+    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
+    public ResponseEntity<TblPostEntity> update(@RequestBody JSONObject jsonData) {
+        TblPostEntity tblPostEntity = postService.updateTblPost(jsonData);
+        return new ResponseEntity<>(tblPostEntity, HttpStatus.OK);
     }
 
     /**
      * Delete data from tbl_post
      *
-     * @param jsonData
+     * @param jsonData data about TblPostEntity want delete
      * @return ResponseEntity<SuccessResult>
      */
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public ResponseEntity<SuccessResult> deleteTblPost(@RequestBody JSONObject jsonData) {
-        postService.deleteTblPost(jsonData);
+        postService.delete(jsonData);
         return new ResponseEntity<>(new SuccessResult("200", "delete record successfully"), HttpStatus.OK);
     }
-
 
     /**
      * Solving and response data for request from client if user search by postCode
@@ -88,7 +87,7 @@ public class PostController {
     @RequestMapping(value = "/search/{pc}", method = RequestMethod.GET)
     public ResponseEntity<AddressResult> searchByPostCode(@PathVariable(value = "pc") String postCode) {
         postCode = postCode.replaceAll(" ", "").replaceAll("-", "");
-        if (postCode.equals("") || !(postCode.matches("^[0-9]{1,}$"))) {
+        if (postCode.equals("") || !("^[0-9]{1,}$".matches(postCode))) {
             throw new BadRequest("Bad Request");
         }
         List<AddressByPostCode> recordList = postService.searchByPostCode(postCode);

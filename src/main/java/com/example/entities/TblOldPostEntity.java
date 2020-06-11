@@ -10,8 +10,15 @@
  */
 package com.example.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.sql.DataSourceDefinition;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,35 +34,31 @@ import javax.persistence.Table;
  * @author DinBT
  */
 @Entity
+@Data
 @Table(name = "tbl_old_post")
-public class TblOldPostEntity {
-	
-	@Id
-	@Column(name = "old_post_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	
-	@Column(name = "old_post_code")
-	private String oldPostCode;
-	
-	@OneToMany(targetEntity = TblAreaEntity.class, mappedBy = "id", fetch = FetchType.LAZY)
-	private List<TblAreaEntity> tblAreaEntityList;
-	
-	
-	public String getOldPostCode() {
-		return oldPostCode;
-	}
+public class TblOldPostEntity implements Serializable {
 
-	public void setOldPostCode(String oldPostCode) {
-		this.oldPostCode = oldPostCode;
-	}
+    @Getter
+    @Setter
+    @Id
+    @Column(name = "old_post_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("old_post_id")
+    private long oldPostId;
 
-	public List<TblAreaEntity> getTblAreaEntityList() {
-		return tblAreaEntityList;
-	}
+    @Getter
+    @Setter
+    @Column(name = "old_post_code", nullable = false, length = 5)
+    @JsonProperty("old_post_code")
+    private String oldPostCode;
 
-	public void setTblAreaEntityList(List<TblAreaEntity> tblAreaEntityList) {
-		this.tblAreaEntityList = tblAreaEntityList;
-	}
+    @OneToMany(targetEntity = TblAreaEntity.class, mappedBy = "tblOldPostEntity", fetch = FetchType.LAZY)
+    private List<TblAreaEntity> tblAreaEntityList;
 
+    public TblOldPostEntity(String oldPostCode) {
+        this.oldPostCode = oldPostCode;
+    }
+
+    public TblOldPostEntity() {
+    }
 }

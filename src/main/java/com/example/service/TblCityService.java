@@ -11,6 +11,8 @@
 package com.example.service;
 
 import com.example.common.Common;
+import com.example.entities.TblCityEntity;
+import com.example.entities.TblOldPostEntity;
 import com.example.exception.BadRequest;
 import com.example.exception.NotFound;
 import com.example.reposistories.TblCityReponsitory;
@@ -32,53 +34,59 @@ public class TblCityService {
     /**
      * Service for add new data to tbl_city
      *
-     * @param jsonData
+     * @param jsonData data about tbl_city want add
      */
     @Transactional(rollbackFor = Exception.class)
-    public void insertTblCity(JSONObject jsonData) {
+    public TblCityEntity saveTblCityEntity(JSONObject jsonData) {
         String code = jsonData.get("code").toString();
         String cityKana = jsonData.get("city_kana").toString();
         String city = jsonData.get("city").toString();
         int prefectureId = Integer.parseInt(jsonData.get("prefecture_id").toString());
-        if (!Common.validateSTring(city, cityKana)) {
+        TblCityEntity tblCityEntity = new TblCityEntity(cityKana, code, city, prefectureId);
+        if (Common.checkKatakana(cityKana) == false || city.matches(Common.KANJI) == false) {
             throw new BadRequest("Fail validate");
         }
-        tblCityReponsitory.insertTblCity(code, cityKana, city, prefectureId);
+        tblCityEntity = tblCityReponsitory.save(tblCityEntity);
+        return tblCityEntity;
     }
+
 
     /**
      * Service for edit new data to tbl_city
      *
-     * @param jsonData
+     * @param jsonData data about tbl_city want edit
      */
     @Transactional(rollbackFor = Exception.class)
-    public void updateTblCity(JSONObject jsonData) {
-        int cityId = Integer.parseInt(jsonData.get("city_id").toString());
-        if (tblCityReponsitory.getCodeById(cityId) == null) {
+    public TblCityEntity updateTblCity(JSONObject jsonData) {
+        long cityId = (long) Integer.parseInt(jsonData.get("city_id").toString());
+        if (tblCityReponsitory.findById(cityId).isPresent() == false) {
             throw new NotFound("Update a tbl_city Record That Not Existed");
         }
         String code = jsonData.get("code").toString();
         String cityKana = jsonData.get("city_kana").toString();
         String city = jsonData.get("city").toString();
         int prefectureId = Integer.parseInt(jsonData.get("prefecture_id").toString());
-        if (!Common.validateSTring(city, cityKana)) {
+        if (Common.checkKatakana(cityKana) == false || city.matches(Common.KANJI) == false) {
             throw new BadRequest("Fail validate");
         }
         tblCityReponsitory.updateTblCity(code, cityKana, city, prefectureId, cityId);
+        TblCityEntity tblCityEntity = new TblCityEntity(cityKana, code, city, prefectureId);
+        tblCityEntity.setCityId(cityId);
+        return tblCityEntity;
     }
 
     /**
      * Delete data from tbl_city
      *
-     * @param jsonData
+     * @param jsonData data about tbl_city want delete
      */
     @Transactional(rollbackFor = Exception.class)
     public void deleteTblCity(JSONObject jsonData) {
-        int cityId = Integer.parseInt(jsonData.get("city_id").toString());
-        if (tblCityReponsitory.getCodeById(cityId) == null) {
+        long cityId = (long) Integer.parseInt(jsonData.get("city_id").toString());
+        if (tblCityReponsitory.findById(cityId).isPresent() == false) {
             throw new NotFound("Delete a tbl_city Record That Not Existed");
         }
-        tblCityReponsitory.deleteTblCity(cityId);
+        tblCityReponsitory.deleteById(cityId);
     }
 
 }

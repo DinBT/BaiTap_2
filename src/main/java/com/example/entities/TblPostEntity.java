@@ -10,6 +10,12 @@
  */
 package com.example.entities;
 
+import com.fasterxml.jackson.annotation.JacksonAnnotation;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
 import javax.persistence.Column;
@@ -27,68 +33,52 @@ import javax.persistence.Table;
  * @author DinBT
  */
 @Entity
+@Data
 @Table(name = "tbl_post")
 public class TblPostEntity {
-	
-	@Id
-	@Column(name = "post_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	
-	@Column(name = "post_code")
-	private String postCode;
-	
-	@Column(name = "multi_area")
-	private int multiArea;
-	
-	@Column(name = "update_show")
-	private int updateShow;
-	
-	@Column(name = "change_reason")
-	private int changeReason;
-	
-	@OneToMany(targetEntity = TblAreaEntity.class, mappedBy = "id", fetch = FetchType.LAZY)
-	private List<TblAreaEntity> tblAreaEntityList;
-	
-	
-	public String getPostCode() {
-		return postCode;
-	}
 
-	public void setPostCode(String postCode) {
-		this.postCode = postCode;
-	}
+    @Getter
+    @Setter
+    @Id
+    @Column(name = "post_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("post_id")
+    private long postId;
 
-	public int getMultiArea() {
-		return multiArea;
-	}
+    @Getter
+    @Setter
+    @Column(name = "post_code", nullable = false, length = 7)
+    @JsonProperty("post_code")
+    private String postCode;
 
-	public void setMultiArea(int multiArea) {
-		this.multiArea = multiArea;
-	}
+    @Getter
+    @Setter
+    @Column(name = "multi_area", nullable = false)
+    @JsonProperty("multi_area")
+    private int multiArea;
 
-	public int getUpdateShow() {
-		return updateShow;
-	}
+    @Getter
+    @Setter
+    @Column(name = "update_show", nullable = false)
+    @JsonProperty("update_show")
+    private int updateShow;
 
-	public void setUpdateShow(int updateShow) {
-		this.updateShow = updateShow;
-	}
+    @Getter
+    @Setter
+    @Column(name = "change_reason", nullable = false)
+    @JsonProperty("change_reason")
+    private int changeReason;
 
-	public int getChangeReason() {
-		return changeReason;
-	}
+    @OneToMany(targetEntity = TblAreaEntity.class, mappedBy = "tblPostEntity", fetch = FetchType.LAZY)
+    private List<TblAreaEntity> tblAreaEntityList;
 
-	public void setChangeReason(int changeReason) {
-		this.changeReason = changeReason;
-	}
+    public TblPostEntity(String postCode, int multiArea, int updateShow, int changeReason) {
+        this.postCode = postCode;
+        this.multiArea = multiArea;
+        this.updateShow = updateShow;
+        this.changeReason = changeReason;
+    }
 
-	public List<TblAreaEntity> getTblAreaEntityList() {
-		return tblAreaEntityList;
-	}
-
-	public void setTblAreaEntityList(List<TblAreaEntity> tblAreaEntityList) {
-		this.tblAreaEntityList = tblAreaEntityList;
-	}
-
+    public TblPostEntity() {
+    }
 }

@@ -11,6 +11,7 @@
 package com.example.controllers;
 
 import com.example.bean.SuccessResult;
+import com.example.entities.TblCityEntity;
 import com.example.service.TblCityService;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,34 +38,34 @@ public class CityController {
     /**
      * add new data into tbl_city
      *
-     * @param jsonData
-     * @return ResponseEntity<SuccessResult>
+     * @param jsonData data about TblCityEntity want add
+     * @return ResponseEntity<TblCityEntity>
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseEntity<SuccessResult> insertTblCity(@RequestBody JSONObject jsonData) {
-        cityService.insertTblCity(jsonData);
-        return new ResponseEntity<>(new SuccessResult("200", "add record successfully"), HttpStatus.OK);
+    public ResponseEntity<TblCityEntity> insertTblCity(@RequestBody JSONObject jsonData) {
+        TblCityEntity tblCityEntity = cityService.saveTblCityEntity(jsonData);
+        return new ResponseEntity<>(tblCityEntity, HttpStatus.OK);
     }
 
     /**
      * edit new data into tbl_city
      *
-     * @param jsonData
-     * @return ResponseEntity<SuccessResult>
+     * @param jsonData data about TblCityEntity want edit
+     * @return ResponseEntity<TblCityEntity>
      */
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public ResponseEntity<SuccessResult> updateTblCity(@RequestBody JSONObject jsonData) {
-        cityService.updateTblCity(jsonData);
-        return new ResponseEntity<>(new SuccessResult("200", "edit record successfully"), HttpStatus.OK);
+    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
+    public ResponseEntity<TblCityEntity> updateTblCity(@RequestBody JSONObject jsonData) {
+        TblCityEntity tblCityEntity = cityService.updateTblCity(jsonData);
+        return new ResponseEntity<>(tblCityEntity, HttpStatus.OK);
     }
 
     /**
      * Delete data from tbl_city
      *
-     * @param jsonData
+     * @param jsonData data about TblCityEntity want delete
      * @return ResponseEntity<SuccessResult>
      */
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public ResponseEntity<SuccessResult> deleteTblCity(@RequestBody JSONObject jsonData) {
         cityService.deleteTblCity(jsonData);
         return new ResponseEntity<>(new SuccessResult("200", "delete record successfully"), HttpStatus.OK);

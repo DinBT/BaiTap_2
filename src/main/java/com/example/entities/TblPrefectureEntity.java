@@ -10,6 +10,11 @@
  */
 package com.example.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
 import javax.persistence.Column;
@@ -27,64 +32,45 @@ import javax.persistence.Table;
  * @author DinBT
  */
 @Entity
+@Data
 @Table(name = "tbl_prefecture")
 public class TblPrefectureEntity {
-	
-	@Id
-	@Column(name = "prefecture_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	
-	@Column(name = "prefecture")
-	private String prefecture;
-	
-	@Column(name = "prefecture_kana")
-	private String prefectureKana;
-	
-	@Column(name = "prefecture_code")
-	private String prefectureCode;
-	
-	@OneToMany(targetEntity = TblCityEntity.class, mappedBy = "id", fetch = FetchType.LAZY)
-	private List<TblCityEntity> tblCityEntityList;
 
-	public long getId() {
-		return id;
-	}
+    @Getter
+    @Setter
+    @Id
+    @Column(name = "prefecture_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("prefecture_id")
+    private long prefectureId;
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    @Getter
+    @Setter
+    @Column(name = "prefecture", nullable = false, length = 100)
+    @JsonProperty("prefecture")
+    private String prefecture;
 
-	public String getPrefecture() {
-		return prefecture;
-	}
+    @Getter
+    @Setter
+    @Column(name = "prefecture_kana", nullable = false, length = 100)
+    @JsonProperty("prefecture_kana")
+    private String prefectureKana;
 
-	public void setPrefecture(String prefecture) {
-		this.prefecture = prefecture;
-	}
+    @Getter
+    @Setter
+    @Column(name = "prefecture_code", nullable = false, length = 2)
+    @JsonProperty("prefecture_code")
+    private String prefectureCode;
 
-	public String getPrefectureKana() {
-		return prefectureKana;
-	}
+    @OneToMany(targetEntity = TblCityEntity.class, mappedBy = "tblPrefectureEntity", fetch = FetchType.LAZY)
+    private List<TblCityEntity> tblCityEntityList;
 
-	public void setPrefectureKana(String prefectureKana) {
-		this.prefectureKana = prefectureKana;
-	}
+    public TblPrefectureEntity(String prefecture, String prefectureKana, String prefectureCode) {
+        this.prefecture = prefecture;
+        this.prefectureKana = prefectureKana;
+        this.prefectureCode = prefectureCode;
+    }
 
-	public String getPrefectureCode() {
-		return prefectureCode;
-	}
-
-	public void setPrefectureCode(String prefectureCode) {
-		this.prefectureCode = prefectureCode;
-	}
-
-	public List<TblCityEntity> getTblCityEntityList() {
-		return tblCityEntityList;
-	}
-
-	public void setTblCityEntityList(List<TblCityEntity> tblCityEntityList) {
-		this.tblCityEntityList = tblCityEntityList;
-	}
-
+    public TblPrefectureEntity() {
+    }
 }

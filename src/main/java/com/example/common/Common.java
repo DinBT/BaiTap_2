@@ -20,50 +20,21 @@ public class Common {
 
     public static final String KANJI = "^[一-龥]+$";
 
-    public static final String POST_CODE = "^(?=.{7}$).*[0-9]+-{1}[0-9]+-{1}[0-9]+$";
+    public static final String POST_CODE = "^(?=.{7}$).*[0-9]+-[0-9]{1,2}+$";
 
     /**
-     * Check if characters in string are all katakana
+     * Check text is katakana
      *
      * @param text : String to check
      * @return true: All is Katakana
      */
-    public static boolean isKatakana(String text) {
+    public static boolean checkKatakana(String text) {
         for (int i = 0; i < text.length(); i++) {
             char c = text.charAt(i);
-            if ((Character.UnicodeBlock.of(c) != Character.UnicodeBlock.KATAKANA) && (isNumber(c + "") == false)
-                    && (Character.isWhitespace(c) == false)) {
+            if (Character.UnicodeBlock.of(c) != Character.UnicodeBlock.KATAKANA) {
                 return false;
             }
         }
         return true;
-    }
-
-    /**
-     * Cheking if a character is half size number
-     *
-     * @param text : Character to check
-     * @return true : Character is half size number
-     */
-    public static boolean isNumber(String text) {
-        for (int i = 0; i < text.length(); i++) {
-            char c = text.charAt(i);
-            int x = (int) c;
-            if ((48 <= x) && (x <= 57)) { // 0 - 9 in ASCII
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Check half size number
-     *
-     * @param text:     Text to check
-     * @param textKana: format kana for text
-     * @return true: Text is true format
-     */
-    public static boolean validateSTring(String text, String textKana) {
-        return (text.matches(KANJI) && isKatakana(textKana));
     }
 }

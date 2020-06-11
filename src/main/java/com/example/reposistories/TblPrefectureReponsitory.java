@@ -45,40 +45,6 @@ public interface TblPrefectureReponsitory extends JpaRepository<TblPrefectureEnt
     void updateTblPrefecture(String prefectureKana, String prefecture, String prefectureCode, long prefectureId);
 
     /**
-     * edit data
-     *
-     * @param prefectureKana : data of prefecture_kana column
-     * @param prefecture     : data of prefecture column
-     * @param prefectureCode : data of prefecture_code column
-     */
-    @Modifying
-    @Query(value = "INSERT INTO tbl_prefecture(prefecture_kana, prefecture, prefecture_code) " +
-            "VALUES (:prefectureKana, :prefecture, :prefectureCode)", nativeQuery = true)
-    void insertTblPrefecture(@Param("prefectureKana") String prefectureKana,
-                             @Param("prefecture") String prefecture,
-                             @Param("prefectureCode") String prefectureCode);
-
-    /**
-     * delete data
-     *
-     * @param prefectureId : data of prefecture_id column
-     */
-    @Modifying
-    @Query(value = "DELETE FROM tbl_prefecture WHERE prefecture_id = ?1 ", nativeQuery = true)
-    void deleteTblPrefecture(long prefectureId);
-
-    /**
-     * Get prefecture_kana from prefectureId for checking existed record
-     *
-     * @param prefectureId
-     * @return String : prefecture_kana
-     */
-    @Query(value = "SELECT prefecture_kana " +
-            "FROM tbl_prefecture " +
-            "WHERE prefecture_id = ?1", nativeQuery = true)
-    String getPrefectureKanaById(long prefectureId);
-
-    /**
      * Search data by prefecture
      *
      * @param prefectureCode

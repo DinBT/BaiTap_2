@@ -11,6 +11,7 @@
 package com.example.service;
 
 import com.example.common.Common;
+import com.example.entities.TblAreaEntity;
 import com.example.exception.BadRequest;
 import com.example.exception.NotFound;
 import com.example.reposistories.TblAreaReponsitory;
@@ -31,12 +32,12 @@ public class TblAreaService {
     private TblAreaReponsitory areaReponsitory;
 
     /**
-     * Service for add new data into tbl_area
+     * Service for edit new data into tbl_area
      *
-     * @param jsonData
+     * @param jsonData data about TblAreaEntity want add
      */
     @Transactional(rollbackFor = Exception.class)
-    public void insertTblArea(JSONObject jsonData) {
+    public TblAreaEntity saveTblArea(JSONObject jsonData) {
         String areaKana = jsonData.get("area_kana").toString();
         String area = jsonData.get("area").toString();
         int cityId = Integer.parseInt(jsonData.get("city_id").toString());
@@ -45,22 +46,23 @@ public class TblAreaService {
         int multiPostArea = Integer.parseInt(jsonData.get("multi_post_area").toString());
         int postId = Integer.parseInt(jsonData.get("post_id").toString());
         int oldPostId = Integer.parseInt(jsonData.get("old_post_id").toString());
-        if (!Common.validateSTring(area, areaKana)) {
+        TblAreaEntity tblAreaEntity = new TblAreaEntity(area, areaKana, multiPostArea, koazaArea, chomeArea, cityId, oldPostId, postId);
+        if (Common.checkKatakana(areaKana) == false || area.matches(Common.KANJI) == false) {
             throw new BadRequest("Fail validate");
         }
-        areaReponsitory.insertTblArea(areaKana, area, cityId, chomeArea, koazaArea, multiPostArea, postId,
-                oldPostId);
+        tblAreaEntity = areaReponsitory.save(tblAreaEntity);
+        return tblAreaEntity;
     }
 
     /**
      * Service for edit new data into tbl_area
      *
-     * @param jsonData
+     * @param jsonData data about TblAreaEntity want edit
      */
     @Transactional(rollbackFor = Exception.class)
-    public void updateTblArea(JSONObject jsonData) {
-        int areaId = Integer.parseInt(jsonData.get("area_id").toString());
-        if (areaReponsitory.getAreaKanaById(areaId) == null) {
+    public TblAreaEntity updateTblArea(JSONObject jsonData) {
+        long areaId = (long) Integer.parseInt(jsonData.get("area_id").toString());
+        if (areaReponsitory.findById(areaId) == null) {
             throw new NotFound("Update a tbl_area Record That Not Existed");
         }
         String areaKana = jsonData.get("area_kana").toString();
@@ -71,11 +73,14 @@ public class TblAreaService {
         int multiPostArea = Integer.parseInt(jsonData.get("multi_post_area").toString());
         int postId = Integer.parseInt(jsonData.get("post_id").toString());
         int oldPostId = Integer.parseInt(jsonData.get("old_post_id").toString());
-        if (!Common.validateSTring(area, areaKana)) {
+        if (Common.checkKatakana(areaKana) == false || area.matches(Common.KANJI) == false) {
             throw new BadRequest("Fail validate");
         }
         areaReponsitory.updateTblArea(areaKana, area, cityId, chomeArea, koazaArea, multiPostArea, postId,
                 oldPostId, areaId);
+        TblAreaEntity tblAreaEntity = new TblAreaEntity(area, areaKana, multiPostArea, koazaArea, chomeArea, cityId, oldPostId, postId);
+        tblAreaEntity.setAreaId(areaId);
+        return tblAreaEntity;
     }
 
     /**
@@ -85,10 +90,10 @@ public class TblAreaService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void deleteTblArea(JSONObject jsonData) {
-        int areaId = Integer.parseInt(jsonData.get("area_id").toString());
-        if (areaReponsitory.getAreaKanaById(areaId) == null) {
+        long areaId = (long) Integer.parseInt(jsonData.get("area_id").toString());
+        if (areaReponsitory.findById(areaId).isPresent() == false) {
             throw new NotFound("Delete a tbl_area Record That Not Existed");
         }
-        areaReponsitory.deleteFromTblArea(areaId);
+        areaReponsitory.deleteById(areaId);
     }
 }

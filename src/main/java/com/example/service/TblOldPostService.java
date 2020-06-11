@@ -10,6 +10,7 @@
  */
 package com.example.service;
 
+import com.example.entities.TblOldPostEntity;
 import com.example.exception.NotFound;
 import com.example.reposistories.TblOldPostReponsitory;
 import org.json.simple.JSONObject;
@@ -25,46 +26,51 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class TblOldPostService {
     @Autowired
-    private TblOldPostReponsitory oldPostReponsitory;
+    private TblOldPostReponsitory tbloldPostReponsitory;
 
     /**
-     * Service for add new data into tbl_old_post
+     * Service for add new data to tbl_old_post
      *
-     * @param jsonData
+     * @param jsonData data about tbl_old_post want add
      */
-    @Transactional(rollbackFor = Exception.class)
-    public void insertTblOldPost(JSONObject jsonData) {
-        String oldPostCode = jsonData.get("old_post_code").toString();
-        oldPostReponsitory.insertTblOldPost(oldPostCode);
+    @Transactional
+    public TblOldPostEntity saveTblOldPostEntity(JSONObject jsonData) {
+        TblOldPostEntity tblOldPostEntity = new TblOldPostEntity(jsonData.get("old_post_code").toString());
+        tblOldPostEntity = tbloldPostReponsitory.save(tblOldPostEntity);
+        return tblOldPostEntity;
     }
 
     /**
      * Service for edit new data into tbl_old_post
      *
-     * @param jsonData
+     * @param jsonData data about tbl_old_post want edit
      */
     @Transactional(rollbackFor = Exception.class)
-    public void updateTblOldPost(JSONObject jsonData) {
-        int oldPostId = Integer.parseInt(jsonData.get("old_post_id").toString());
+    public TblOldPostEntity updateTblOldPost(JSONObject jsonData) {
+        long oldPostId = (long) Integer.parseInt(jsonData.get("old_post_id").toString());
 
-        if (oldPostReponsitory.getOldPostCodeById(oldPostId) == null) {
+        if (tbloldPostReponsitory.findById(oldPostId).isPresent() == false) {
             throw new NotFound("edit a tbl_old_post Record That Not Existed");
         }
         String oldPostCode = jsonData.get("old_post_code").toString();
-        oldPostReponsitory.updateTblOldPost(oldPostCode, oldPostId);
+        tbloldPostReponsitory.updateTblOldPost(oldPostCode, oldPostId);
+        TblOldPostEntity tblOldPostEntity = new TblOldPostEntity(oldPostCode);
+        tblOldPostEntity.setOldPostId(oldPostId);
+        return tblOldPostEntity;
+
     }
 
     /**
      * Service for deleting data from tbl_old_post
      *
-     * @param jsonData
+     * @param jsonData data about tbl_old_post want delete
      */
     @Transactional(rollbackFor = Exception.class)
     public void deleteTblOldPost(JSONObject jsonData) {
-        int oldPostId = Integer.parseInt(jsonData.get("old_post_id").toString());
-        if (oldPostReponsitory.getOldPostCodeById(oldPostId) == null) {
+        long oldPostId = (long) Integer.parseInt(jsonData.get("old_post_id").toString());
+        if (tbloldPostReponsitory.findById(oldPostId) == null) {
             throw new NotFound("Delete a tbl_old_post Record That Not Existed");
         }
-        oldPostReponsitory.deleteTblOldPost(oldPostId);
+        tbloldPostReponsitory.deleteById(oldPostId);
     }
 }
