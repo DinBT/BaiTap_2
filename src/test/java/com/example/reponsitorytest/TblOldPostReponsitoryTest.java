@@ -23,7 +23,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import static junit.framework.TestCase.assertNull;
+import static junit.framework.TestCase.assertFalse;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -48,10 +48,9 @@ public class TblOldPostReponsitoryTest {
     @Test
     @Transactional
     @FlywayTest(locationsForMigrate = "db/migration")
-    public void insertTblOldPost() {
-        tblOldPostReponsitory.save(new TblOldPostEntity("933"));
-        TblOldPostEntity oldPostEntity = tblOldPostReponsitory.getOne(2L);
-        assertThat(oldPostEntity.getOldPostCode(), is("933"));
+    public void saveTblOldPostEntity() {
+        TblOldPostEntity oldPostEntity = tblOldPostReponsitory.save(new TblOldPostEntity("1325"));
+        assertThat(oldPostEntity.getOldPostCode(), is("1325"));
     }
 
     /**
@@ -73,8 +72,8 @@ public class TblOldPostReponsitoryTest {
     @Transactional
     @FlywayTest(locationsForMigrate = "db/migration")
     public void deleteTblOldPost() {
-        tblOldPostReponsitory.deleteById(2L);
-        assertNull(tblOldPostReponsitory.getOne(2L).getOldPostCode());
+        tblOldPostReponsitory.deleteById(1L);
+        assertFalse(tblOldPostReponsitory.findById(1L).isPresent());
 
     }
 

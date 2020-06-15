@@ -22,7 +22,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertNull;
+import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -47,9 +49,9 @@ public class TblCityReponsitoryTest {
     @Transactional
     @FlywayTest(locationsForMigrate = "db/migration")
     public void insertTblCity() {
-        tblCityReponsitory.save(new TblCityEntity("ｼｭｳﾁｸﾞﾝﾓﾘﾏﾁ", "01101", "周智郡森町", 1));
+        tblCityReponsitory.save(new TblCityEntity("ｼｭｳﾁｸﾞﾝﾓﾘﾏ", "01102", "周智郡", 1));
         TblCityEntity tblCityEntity = tblCityReponsitory.getOne(2L);
-        assertThat(tblCityEntity.getCode(), is("01101"));
+        assertThat(tblCityEntity.getCode(), is("01102"));
     }
 
     /**
@@ -71,9 +73,8 @@ public class TblCityReponsitoryTest {
     @Transactional
     @FlywayTest(locationsForMigrate = "db/migration")
     public void deleteTblCity() {
-        tblCityReponsitory.deleteById(2L);
-        TblCityEntity tblCityEntity = tblCityReponsitory.getOne(2L);
-        assertNull(tblCityEntity.getCode());
+        tblCityReponsitory.deleteById(1L);
+        assertFalse(tblCityReponsitory.findById(1L).isPresent());
     }
 
     /**

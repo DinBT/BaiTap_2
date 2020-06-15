@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertNull;
 import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -103,9 +104,8 @@ public class TblPostReponsitoryTest {
     @Transactional
     @FlywayTest(locationsForMigrate = "db/migration")
     public void deleteTblPost() {
-        tblPostReponsitory.deleteById(2L);
-        String postCode = tblPostReponsitory.getOne(2L).getPostCode();
-        assertNull(postCode);
+        tblPostReponsitory.deleteById(1L);
+        assertFalse(tblPostReponsitory.findById(1L).isPresent());
     }
 
     /**
@@ -132,15 +132,6 @@ public class TblPostReponsitoryTest {
         assertThat(postCode, is("6-66-66"));
     }
 
-    /**
-     * Test getting data from tbl_post
-     */
-    @Test
-    @FlywayTest(locationsForMigrate = "db/migration")
-    public void getPostCodeById() {
-        String postCode = tblPostReponsitory.getOne(1L).getPostCode();
-        assertThat(postCode, is("9-99-99"));
-    }
 
     /**
      * Test inserting duplicate data

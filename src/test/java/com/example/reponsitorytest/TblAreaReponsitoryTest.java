@@ -22,9 +22,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 
-import static junit.framework.TestCase.assertNull;
+import static junit.framework.TestCase.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertFalse;
 
 /**
  * Test for {@link TblAreaReponsitory}
@@ -46,9 +47,9 @@ public class TblAreaReponsitoryTest {
     @Transactional
     @FlywayTest(locationsForMigrate = "db/migration")
     public void insertTblArea() {
-        tblAreaReponsitory.save(new TblAreaEntity("ｲｲｲﾀｲｲﾀｲﾞ", "飯田田田", 1, 0, 0, 1, 1, 1));
+        tblAreaReponsitory.save(new TblAreaEntity("ｲｲｲﾀｲｲﾞ", "飯田田", 1, 0, 0, 1, 1, 1));
         TblAreaEntity tblAreaEntity = tblAreaReponsitory.getOne(2L);
-        assertThat(tblAreaEntity.getAreaKana(), is("ｲｲｲﾀｲｲﾀｲﾞ"));
+        assertEquals(tblAreaEntity.getAreaKana(), "飯田田");
     }
 
     /**
@@ -58,9 +59,9 @@ public class TblAreaReponsitoryTest {
     @Transactional
     @FlywayTest(locationsForMigrate = "db/migration")
     public void updateTblArea() {
-        tblAreaReponsitory.updateTblArea("ｲｲｲﾀｲｲﾀｲﾀﾞ", "飯田田田田", 1, 0, 0, 1, 1, 1, 1);
+        tblAreaReponsitory.updateTblArea("ｲｲｲﾀｲｲﾀ", "飯田田田", 1, 0, 0, 1, 1, 1, 1L);
         TblAreaEntity tblAreaEntity = tblAreaReponsitory.getOne(1L);
-        assertThat(tblAreaEntity.getAreaKana(), is("ｲｲｲﾀｲｲﾀｲﾀﾞ"));
+        assertEquals(tblAreaEntity.getAreaKana(), "ｲｲｲﾀｲｲﾀ");
     }
 
     /**
@@ -71,8 +72,7 @@ public class TblAreaReponsitoryTest {
     @FlywayTest(locationsForMigrate = "db/migration")
     public void deleteTblArea() {
         tblAreaReponsitory.deleteById(1L);
-        TblAreaEntity tblAreaEntity = tblAreaReponsitory.getOne(1L);
-        assertNull(tblAreaEntity);
+        assertFalse(tblAreaReponsitory.findById(1L).isPresent());
     }
 
 }

@@ -25,6 +25,8 @@
 
  import java.util.List;
 
+ import static junit.framework.TestCase.assertEquals;
+ import static junit.framework.TestCase.assertFalse;
  import static junit.framework.TestCase.assertNull;
  import static junit.framework.TestCase.assertTrue;
  import static org.hamcrest.MatcherAssert.assertThat;
@@ -80,7 +82,7 @@
      public void insertTblPrefecture() {
          tblRefectureReponsitory.save(new TblPrefectureEntity("ﾎｯｶｲﾄﾞｳ", "北海道", "02"));
          TblPrefectureEntity tblPrefectureEntity = tblRefectureReponsitory.getOne(2L);
-         assertThat(tblPrefectureEntity.getPrefectureKana(), is("ﾎｯｶｲﾄﾞｳ"));
+         assertEquals(tblPrefectureEntity.getPrefectureKana(), "北海道");
      }
 
      /**
@@ -92,7 +94,7 @@
      public void updateTblPrefecture() {
          tblRefectureReponsitory.updateTblPrefecture("一一一一一", "ァァァァァ", "03", 1);
          TblPrefectureEntity tblPrefectureEntity = tblRefectureReponsitory.getOne(1L);
-         assertThat(tblPrefectureEntity.getPrefectureKana(), is("一一一一一"));
+         assertEquals(tblPrefectureEntity.getPrefectureKana(), "一一一一一");
      }
 
      /**
@@ -102,9 +104,8 @@
      @Transactional
      @FlywayTest(locationsForMigrate = "db/migration")
      public void deleteTblPrefecture() {
-         tblRefectureReponsitory.deleteById(2L);
-         TblPrefectureEntity tblPrefectureEntity = tblRefectureReponsitory.getOne(2L);
-         assertNull(tblPrefectureEntity);
+         tblRefectureReponsitory.deleteById(1L);
+         assertFalse(tblRefectureReponsitory.findById(1L).isPresent());
      }
 
      /**

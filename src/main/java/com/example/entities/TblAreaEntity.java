@@ -112,4 +112,7 @@ public class TblAreaEntity {
         this.tblOldPostEntity.setOldPostId(tblOldPostEntity);
         this.tblPostEntity.setPostId(tblPostEntity);
     }
+
+    public TblAreaEntity() {
+    }
 }
