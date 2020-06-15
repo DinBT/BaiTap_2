@@ -12,6 +12,7 @@ package com.example.service;
 
 import com.example.bean.CityByPrefecture;
 import com.example.common.Common;
+import com.example.entities.TblPrefectureEntity;
 import com.example.exception.BadRequest;
 import com.example.exception.NotFound;
 import com.example.reposistories.TblPrefectureReponsitory;
@@ -35,51 +36,57 @@ public class TblPrefectureService {
     /**
      * Service for add new data to tbl_prefecture
      *
-     * @param jsonData
+     * @param jsonData data about TblPrefectureEntity want add
      */
     @Transactional(rollbackFor = Exception.class)
-    public void insertTblPrefecture(JSONObject jsonData) {
+    public TblPrefectureEntity insertTblPrefecture(JSONObject jsonData) {
         String prefecture = jsonData.get("prefecture").toString();
         String prefectureKana = jsonData.get("prefecture_kana").toString();
         String prefectureCode = jsonData.get("prefecture_code").toString();
-        if (!Common.validateSTring(prefecture, prefectureKana)) {
+        TblPrefectureEntity tblPrefectureEntity = new TblPrefectureEntity(prefecture, prefectureKana, prefectureCode);
+        if (Common.checkKatakana(prefectureKana) == false || prefectureCode.matches(Common.KANJI) == false) {
             throw new BadRequest("Fail validate");
         }
-        prefectureReponsitory.insertTblPrefecture(prefectureKana, prefecture, prefectureCode);
+        tblPrefectureEntity = prefectureReponsitory.save(tblPrefectureEntity);
+        return tblPrefectureEntity;
     }
 
     /**
      * Service for edit new data into tbl_prefecture
      *
-     * @param jsonData
+     * @param jsonData data about TblPrefectureEntity want edit
+     * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public void updateTblPrefecture(JSONObject jsonData) {
-        int prefectureId = Integer.parseInt(jsonData.get("prefecture_id").toString());
-        if (prefectureReponsitory.getPrefectureKanaById(prefectureId) == null) {
+    public TblPrefectureEntity updateTblPrefecture(JSONObject jsonData) {
+        long prefectureId = (long) Integer.parseInt(jsonData.get("prefecture_id").toString());
+        if (prefectureReponsitory.findById(prefectureId) == null) {
             throw new NotFound("Update a tbl_prefecture Record That Not Existed");
         }
         String prefecture = jsonData.get("prefecture").toString();
         String prefectureKana = jsonData.get("prefecture_kana").toString();
         String prefectureCode = jsonData.get("prefecture_code").toString();
-        if (!Common.validateSTring(prefecture, prefectureKana)) {
+        if (Common.checkKatakana(prefectureKana) == false || prefectureCode.matches(Common.KANJI) == false) {
             throw new BadRequest("Fail validate");
         }
         prefectureReponsitory.updateTblPrefecture(prefecture, prefectureKana, prefectureCode, prefectureId);
+        TblPrefectureEntity tblPrefectureEntity = new TblPrefectureEntity(prefecture, prefectureKana, prefectureCode);
+        tblPrefectureEntity.setPrefectureId(prefectureId);
+        return tblPrefectureEntity;
     }
 
     /**
      * Service for deleting data from tbl_prefecture
      *
-     * @param jsonData
+     * @param jsonData data about TblPrefectureEntity want delete
      */
     @Transactional(rollbackFor = Exception.class)
     public void deleteTblPrefecture(JSONObject jsonData) {
-        int prefectureId = Integer.parseInt(jsonData.get("prefecture_id").toString());
-        if (prefectureReponsitory.getPrefectureKanaById(prefectureId) == null) {
+        long prefectureId = (long) Integer.parseInt(jsonData.get("prefecture_id").toString());
+        if (prefectureReponsitory.findById(prefectureId) == null) {
             throw new NotFound("Delete a tbl_prefecture Record That Not Existed");
         }
-        prefectureReponsitory.deleteTblPrefecture(prefectureId);
+        prefectureReponsitory.deleteById(prefectureId);
     }
 
     /**

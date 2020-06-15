@@ -13,6 +13,7 @@ package com.example.controllers;
 import com.example.bean.CityByPrefecture;
 import com.example.bean.ListCityResult;
 import com.example.bean.SuccessResult;
+import com.example.entities.TblPrefectureEntity;
 import com.example.exception.BadRequest;
 import com.example.exception.NotFound;
 import com.example.service.TblPrefectureService;
@@ -44,34 +45,34 @@ public class PrefectureController {
     /**
      * add new data into tbl_prefecture
      *
-     * @param jsonData
-     * @return ResponseEntity<SuccessResult>
+     * @param jsonData data about TblPrefectureEntity want add
+     * @return ResponseEntity<TblPrefectureEntity>
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseEntity<SuccessResult> insertTblArea(@RequestBody JSONObject jsonData) {
-        prefectureService.insertTblPrefecture(jsonData);
-        return new ResponseEntity<>(new SuccessResult("200", "add record successfully"), HttpStatus.OK);
+    public ResponseEntity<TblPrefectureEntity> insertTblArea(@RequestBody JSONObject jsonData) {
+        TblPrefectureEntity tblPrefectureEntity = prefectureService.insertTblPrefecture(jsonData);
+        return new ResponseEntity<>(tblPrefectureEntity, HttpStatus.OK);
     }
 
     /**
      * edit new data into tbl_prefecture
      *
-     * @param jsonData
-     * @return ResponseEntity<SuccessResult>
+     * @param jsonData data about TblPrefectureEntity want edit
+     * @return ResponseEntity<TblPrefectureEntity>
      */
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public ResponseEntity<SuccessResult> updateTblArea(@RequestBody JSONObject jsonData) {
-        prefectureService.updateTblPrefecture(jsonData);
-        return new ResponseEntity<>(new SuccessResult("200", "edit record successfully"), HttpStatus.OK);
+    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
+    public ResponseEntity<TblPrefectureEntity> updateTblArea(@RequestBody JSONObject jsonData) {
+        TblPrefectureEntity tblPrefectureEntity = prefectureService.updateTblPrefecture(jsonData);
+        return new ResponseEntity<>(tblPrefectureEntity, HttpStatus.OK);
     }
 
     /**
      * Delete data from tbl_area
      *
-     * @param jsonData
+     * @param jsonData data about TblPrefectureEntity want delete
      * @return ResponseEntity<SuccessResult>
      */
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public ResponseEntity<SuccessResult> deletePrefecture(@RequestBody JSONObject jsonData) {
         prefectureService.deleteTblPrefecture(jsonData);
         return new ResponseEntity<>(new SuccessResult("200", "deleted record successfully"), HttpStatus.OK);

@@ -15,6 +15,7 @@ import com.example.entities.TblPrefectureEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -42,40 +43,6 @@ public interface TblPrefectureReponsitory extends JpaRepository<TblPrefectureEnt
             "prefecture_code = ?3 " +
             "WHERE prefecture_id = ?4 ", nativeQuery = true)
     void updateTblPrefecture(String prefectureKana, String prefecture, String prefectureCode, long prefectureId);
-
-    /**
-     * edit data
-     *
-     * @param prefectureKana : data of prefecture_kana column
-     * @param prefecture     : data of prefecture column
-     * @param prefectureCode : data of prefecture_code column
-     */
-    @Modifying
-    @Query(value = "INSERT tbl_prefecture " +
-            "SET prefecture_kana = ?1, " +
-            "prefecture = ?2, " +
-            "prefecture_code = ?3 ", nativeQuery = true)
-    void insertTblPrefecture(String prefectureKana, String prefecture, String prefectureCode);
-
-    /**
-     * delete data
-     *
-     * @param prefectureId : data of prefecture_id column
-     */
-    @Modifying
-    @Query(value = "DELETE FROM tbl_prefecture WHERE prefecture_id = ?1 ", nativeQuery = true)
-    void deleteTblPrefecture(long prefectureId);
-
-    /**
-     * Get prefecture_kana from prefectureId for checking existed record
-     *
-     * @param prefectureId
-     * @return String : prefecture_kana
-     */
-    @Query(value = "SELECT prefecture_kana " +
-            "FROM tbl_prefecture " +
-            "WHERE prefecture_id = ?1", nativeQuery = true)
-    String getPrefectureKanaById(int prefectureId);
 
     /**
      * Search data by prefecture

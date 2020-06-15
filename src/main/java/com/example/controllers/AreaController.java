@@ -11,6 +11,7 @@
 package com.example.controllers;
 
 import com.example.bean.SuccessResult;
+import com.example.entities.TblAreaEntity;
 import com.example.service.TblAreaService;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,34 +39,34 @@ public class AreaController {
     /**
      * add new data into tbl_area
      *
-     * @param jsonData
-     * @return ResponseEntity<SuccessResult>
+     * @param jsonData data about TblAreaEntity want add
+     * @return ResponseEntity<TblAreaEntity>
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseEntity<SuccessResult> insertTblArea(@RequestBody JSONObject jsonData) {
-        areaService.insertTblArea(jsonData);
-        return new ResponseEntity<>(new SuccessResult("200", "add record successfully"), HttpStatus.OK);
+    public ResponseEntity<TblAreaEntity> insertTblArea(@RequestBody JSONObject jsonData) {
+        TblAreaEntity tblAreaEntity = areaService.saveTblArea(jsonData);
+        return new ResponseEntity<>(tblAreaEntity, HttpStatus.OK);
     }
 
     /**
      * edit new data into tbl_area
      *
-     * @param jsonData
-     * @return ResponseEntity<SuccessResult>
+     * @param jsonData data about TblAreaEntity want edit
+     * @return ResponseEntity<TblAreaEntity>
      */
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public ResponseEntity<SuccessResult> updateTblArea(@RequestBody JSONObject jsonData) {
-        areaService.updateTblArea(jsonData);
-        return new ResponseEntity<>(new SuccessResult("200", "edit record successfully"), HttpStatus.OK);
+    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
+    public ResponseEntity<TblAreaEntity> updateTblArea(@RequestBody JSONObject jsonData) {
+        TblAreaEntity tblAreaEntity = areaService.updateTblArea(jsonData);
+        return new ResponseEntity<>(tblAreaEntity, HttpStatus.OK);
     }
 
     /**
      * Delete data from tbl_area
      *
-     * @param jsonData
+     * @param jsonData data about TblAreaEntity want delete
      * @return ResponseEntity<SuccessResult>
      */
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public ResponseEntity<SuccessResult> deleteTblArea(@RequestBody JSONObject jsonData) {
         areaService.deleteTblArea(jsonData);
         return new ResponseEntity<>(new SuccessResult("200", "delete record successfully"), HttpStatus.OK);
