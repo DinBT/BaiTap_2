@@ -12,6 +12,7 @@ package com.example.controllers;
 
 import com.example.bean.AddressByPostCode;
 import com.example.bean.AddressResult;
+import com.example.bean.PostDto;
 import com.example.bean.SuccessResult;
 import com.example.entities.TblPostEntity;
 import com.example.exception.BadRequest;
@@ -49,7 +50,7 @@ public class PostController {
      * @return ResponseEntity<TblPostEntity>
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseEntity<TblPostEntity> insert(@RequestBody JSONObject jsonData) {
+    public ResponseEntity<TblPostEntity> insert(@RequestBody PostDto jsonData) {
         TblPostEntity tblPostEntity = postService.saveTblPost(jsonData);
         return new ResponseEntity<>(tblPostEntity, HttpStatus.OK);
     }
@@ -73,7 +74,7 @@ public class PostController {
      * @return ResponseEntity<SuccessResult>
      */
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    public ResponseEntity<SuccessResult> deleteTblPost(@RequestBody JSONObject jsonData) {
+    public ResponseEntity<SuccessResult> deleteTblPost(@RequestBody int jsonData) {
         postService.delete(jsonData);
         return new ResponseEntity<>(new SuccessResult("200", "delete record successfully"), HttpStatus.OK);
     }
@@ -87,7 +88,7 @@ public class PostController {
     @RequestMapping(value = "/search/{pc}", method = RequestMethod.GET)
     public ResponseEntity<AddressResult> searchByPostCode(@PathVariable(value = "pc") String postCode) {
         postCode = postCode.replaceAll(" ", "").replaceAll("-", "");
-        if (postCode.equals("") || !(postCode.matches("^[0-9]{1,}$"))) {
+        if (postCode.equals("") || (postCode.matches("^[0-9]{1,}$") == false)) {
             throw new BadRequest("Bad Request");
         }
         List<AddressByPostCode> recordList = postService.searchByPostCode(postCode);

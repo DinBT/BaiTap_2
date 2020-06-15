@@ -10,6 +10,7 @@ public class AddressApplication {
         try {
             SpringApplication.run(AddressApplication.class, args);
         } catch (Exception e) {
+//            e.printStackTrace();
         }
     }
 

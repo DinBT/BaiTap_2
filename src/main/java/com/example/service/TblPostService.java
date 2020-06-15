@@ -11,12 +11,14 @@
 package com.example.service;
 
 import com.example.bean.AddressByPostCode;
+import com.example.bean.PostDto;
 import com.example.common.Common;
 import com.example.entities.TblPostEntity;
 import com.example.exception.BadRequest;
 import com.example.exception.NotFound;
 import com.example.reposistories.TblPostReponsitory;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,12 +37,12 @@ public class TblPostService {
 
     /**
      * Service for delete record to tbl_post
-     *
-     * @param jsonData data about TblPostEntity want delete
+     * <p>
+     * //     * @param jsonData data about TblPostEntity want delete
      */
     @Transactional(rollbackFor = Exception.class)
-    public void delete( JSONObject jsonData) {
-        long postId = (long) Integer.parseInt(jsonData.get("post_id").toString());
+    public void delete(long postId) {
+//        long postId = (long) Integer.parseInt(jsonData.get("post_id").toString());
         if (postReponsitory.findById(postId).isPresent() == false) {
             throw new NotFound("delete a tbl_post Record That Not Existed");
         }
@@ -54,11 +56,11 @@ public class TblPostService {
      * @return TblPostEntity
      */
     @Transactional(rollbackFor = Exception.class)
-    public TblPostEntity saveTblPost(JSONObject jsonData) {
-        String postCode = jsonData.get("post_code").toString();
-        int updateShow = Integer.parseInt(jsonData.get("update_show").toString());
-        int changeReason = Integer.parseInt(jsonData.get("change_reason").toString());
-        int multiArea = Integer.parseInt(jsonData.get("multi_area").toString());
+    public TblPostEntity saveTblPost(PostDto jsonData) {
+        String postCode = jsonData.getPostCode();
+        int updateShow = jsonData.getUpdateShow();
+        int changeReason = jsonData.getChangeReason();
+        int multiArea = jsonData.getMultiArea();
         TblPostEntity tblPostEntity = new TblPostEntity(postCode, multiArea, updateShow, changeReason);
         if (!postCode.matches(Common.POST_CODE)) {
             throw new BadRequest("Fail validate");
@@ -95,7 +97,7 @@ public class TblPostService {
     /**
      * Service for seaching by postCode
      *
-     * @param postCode  data of post_code column
+     * @param postCode data of post_code column
      * @return List<AddressByPostCode>: Address had search
      */
     public List<AddressByPostCode> searchByPostCode(String postCode) {

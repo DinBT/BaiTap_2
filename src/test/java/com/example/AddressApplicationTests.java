@@ -11,7 +11,8 @@ import static org.mockito.Mockito.doThrow;
 class AddressApplicationTests {
 
     @Test
-    void contextLoads() {
+    void contextLoads() throws  Exception {
+
     }
 
 }

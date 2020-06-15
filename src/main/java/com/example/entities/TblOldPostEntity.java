@@ -51,9 +51,9 @@ public class TblOldPostEntity implements Serializable {
     @Column(name = "old_post_code", nullable = false, length = 5)
     @JsonProperty("old_post_code")
     private String oldPostCode;
-
-    @OneToMany(targetEntity = TblAreaEntity.class, mappedBy = "tblOldPostEntity", fetch = FetchType.LAZY)
-    private List<TblAreaEntity> tblAreaEntityList;
+//
+//    @OneToMany(targetEntity = TblAreaEntity.class, mappedBy = "tblOldPostEntity", fetch = FetchType.LAZY)
+//    private List<TblAreaEntity> tblAreaEntityList;
 
     public TblOldPostEntity(String oldPostCode) {
         this.oldPostCode = oldPostCode;
