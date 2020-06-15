@@ -23,8 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import static junit.framework.TestCase.assertEquals;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertFalse;
 
 /**
