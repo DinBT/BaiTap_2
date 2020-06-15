@@ -69,7 +69,7 @@ public class TblCityEntity {
     @Getter
     @Setter
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "prefecture_id", nullable = false)
+    @JoinColumn(name = "prefecture_id",nullable = false)
     @Fetch(FetchMode.JOIN)
     @JsonProperty("prefecture_id")
     private TblPrefectureEntity tblPrefectureEntity;

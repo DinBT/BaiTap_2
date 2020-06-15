@@ -113,6 +113,7 @@ public class TblAreaEntity {
         this.tblPostEntity.setPostId(tblPostEntity);
     }
 
+
     public TblAreaEntity() {
     }
 }
