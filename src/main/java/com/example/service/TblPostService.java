@@ -42,9 +42,8 @@ public class TblPostService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void delete(long postId) {
-//        long postId = (long) Integer.parseInt(jsonData.get("post_id").toString());
         if (postReponsitory.findById(postId).isPresent() == false) {
-            throw new NotFound("delete a tbl_post Record That Not Existed");
+            throw new NotFound("resource not found");
         }
         postReponsitory.deleteById(postId);
     }
@@ -75,13 +74,13 @@ public class TblPostService {
      * @param jsonData data about TblPostEntity want edit
      */
     @Transactional(rollbackFor = Exception.class)
-    public TblPostEntity updateTblPost(JSONObject jsonData) {
-        long postId = (long) Integer.parseInt(jsonData.get("post_id").toString());
+    public TblPostEntity updateTblPost(PostDto jsonData) {
+        long postId = jsonData.getPostId();
         if (postReponsitory.findById(postId).isPresent() != false) {
-            String postCode = jsonData.get("post_code").toString();
-            int updateShow = Integer.parseInt(jsonData.get("update_show").toString());
-            int changeReason = Integer.parseInt(jsonData.get("change_reason").toString());
-            int multiArea = Integer.parseInt(jsonData.get("multi_area").toString());
+            String postCode = jsonData.getPostCode();
+            int updateShow = jsonData.getUpdateShow();
+            int changeReason = jsonData.getChangeReason();
+            int multiArea = jsonData.getMultiArea();
             if (!postCode.matches(Common.POST_CODE)) {
                 throw new BadRequest("Fail validate");
             }

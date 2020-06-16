@@ -62,7 +62,7 @@ public class PostController {
      * @return ResponseEntity<TblPostEntity>
      */
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
-    public ResponseEntity<TblPostEntity> update(@RequestBody JSONObject jsonData) {
+    public ResponseEntity<TblPostEntity> update(@RequestBody PostDto jsonData) {
         TblPostEntity tblPostEntity = postService.updateTblPost(jsonData);
         return new ResponseEntity<>(tblPostEntity, HttpStatus.OK);
     }
@@ -70,12 +70,12 @@ public class PostController {
     /**
      * Delete data from tbl_post
      *
-     * @param jsonData data about TblPostEntity want delete
+     * @param postId data about TblPostEntity want delete
      * @return ResponseEntity<SuccessResult>
      */
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    public ResponseEntity<SuccessResult> deleteTblPost(@RequestBody int jsonData) {
-        postService.delete(jsonData);
+    @RequestMapping(value = "/delete/{postId}", method = RequestMethod.DELETE)
+    public ResponseEntity<SuccessResult> deleteTblPost(@PathVariable(value = "postId") int postId) {
+        postService.delete(postId);
         return new ResponseEntity<>(new SuccessResult("200", "delete record successfully"), HttpStatus.OK);
     }
 
