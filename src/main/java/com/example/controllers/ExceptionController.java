@@ -59,12 +59,12 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
     /**
      * Handle BadRequest, when client sending a bad data,
      *
-     * @return ResponseEntity<ErrorResult>: error message and status code 303
+     * @return ResponseEntity<ErrorResult>: error message and status code 409
      */
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ErrorResult> handleNumException() {
-        ErrorResult error = new ErrorResult("303", "wrong manipulation !!!");
-        return new ResponseEntity<>(error, HttpStatus.SEE_OTHER);
+        ErrorResult error = new ErrorResult("409", "wrong manipulation !!!");
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 
     /**

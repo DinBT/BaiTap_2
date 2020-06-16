@@ -159,14 +159,14 @@ public class PostControllerTestI {
         postDto.setChangeReason(2);
         postDto.setUpdateShow(3);
 
-        when(postService.saveTblPost(postDto)).thenThrow(new DataIntegrityViolationException("data is already existed"));
+        when(postService.saveTblPost(postDto)).thenThrow(new DataIntegrityViolationException("Conflict"));
 
         mockMvc.perform(post("/address/post/add")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(postDto)))
                 .andDo(print())
-                .andExpect(status().isSeeOther())
-                .andExpect(jsonPath("$.error", is("303")))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.error", is("409")))
                 .andExpect(jsonPath("$.error_description", is("wrong manipulation !!!")));
 
         verify(postService, times(1)).saveTblPost(postDto);
@@ -248,14 +248,14 @@ public class PostControllerTestI {
         postDto.setChangeReason(2);
         postDto.setUpdateShow(3);
 
-        when(postService.updateTblPost(postDto)).thenThrow(new DataIntegrityViolationException("data is already existed"));
+        when(postService.updateTblPost(postDto)).thenThrow(new DataIntegrityViolationException("Conflict"));
 
         mockMvc.perform(put("/address/post/edit")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(postDto)))
                 .andDo(print())
-                .andExpect(status().isSeeOther())
-                .andExpect(jsonPath("$.error", is("303")))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.error", is("409")))
                 .andExpect(jsonPath("$.error_description", is("wrong manipulation !!!")));
 
         verify(postService, times(1)).updateTblPost(postDto);
